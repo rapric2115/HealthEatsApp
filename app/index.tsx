@@ -1,34 +1,28 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, ScrollView, SafeAreaView, StatusBar } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  SafeAreaView,
+  StatusBar,
+  TouchableOpacity,
+} from "react-native";
 import { useRouter } from "expo-router";
-import '../global.css';
 
 // Import components
 import Header from "./components/Header";
 import DashboardSummary from "./components/DashboardSummary";
 import NavigationCards from "./components/NavigationCards";
 import OnboardingModal from "./components/OnboardingModal";
+import { useAuthStore } from "./store/authStore";
+import { useUserProfileStore } from "./store/userProfileStore";
+import { LogOut } from "lucide-react-native";
 
 export default function MainDashboard() {
   const router = useRouter();
   const [showOnboarding, setShowOnboarding] = useState(true);
-  const [userProfile, setUserProfile] = useState({
-    healthProfile: {
-      conditions: ["High Cholesterol", "Type 2 Diabetes"],
-      restrictions: ["No Gluten"],
-      router: '/health-profile',
-    },
-    mealPlanStatus: {
-      daysPlanned: 5,
-      totalDays: 7,
-      router: '/meal-planning'
-    },
-    groceryListStatus: {
-      itemsChecked: 12,
-      totalItems: 28,
-      router: '/grocery-list'
-    },
-  });
+  const { user, logout } = useAuthStore();
+  const userProfile = useUserProfileStore();
 
   // Simulate checking if user has completed onboarding
   useEffect(() => {
@@ -43,7 +37,7 @@ export default function MainDashboard() {
 
   const handleOnboardingComplete = () => {
     setShowOnboarding(false);
-    // In a real app, would save user profile to storage/API
+    // Profile is already saved to storage via Zustand persist middleware
   };
 
   const handleMenuPress = () => {
@@ -56,6 +50,11 @@ export default function MainDashboard() {
     console.log("Notifications pressed");
   };
 
+  const handleLogout = () => {
+    logout();
+    router.replace("/login");
+  };
+
   return (
     <SafeAreaView className="flex-1 bg-gray-100">
       <StatusBar barStyle="dark-content" backgroundColor="#f0fdf4" />
@@ -66,16 +65,30 @@ export default function MainDashboard() {
       />
 
       <ScrollView className="flex-1 p-4">
-        <View className="mb-6">
-          <Text className="text-2xl font-bold text-gray-800 mb-2">Hello!</Text>
-          <Text className="text-gray-600">
-            Let's plan your healthy meals for the week
-          </Text>
+        <View className="mb-6 flex-row justify-between items-center">
+          <View>
+            <Text className="text-2xl font-bold text-gray-800 mb-2">
+              Hello, {user?.name || "User"}!
+            </Text>
+            <Text className="text-gray-600">
+              Let's plan your healthy meals for the week
+            </Text>
+          </View>
+          <TouchableOpacity
+            onPress={handleLogout}
+            className="bg-gray-200 p-2 rounded-full"
+          >
+            <LogOut size={20} color="#4B5563" />
+          </TouchableOpacity>
         </View>
 
         <View className="mb-6">
           <DashboardSummary
-            healthProfile={userProfile.healthProfile}
+            healthProfile={{
+              conditions: userProfile.healthProfile.conditions,
+              restrictions: userProfile.healthProfile.restrictions,
+              router: userProfile.healthProfile.router
+            }}
             mealPlanStatus={userProfile.mealPlanStatus}
             groceryListStatus={userProfile.groceryListStatus}
           />

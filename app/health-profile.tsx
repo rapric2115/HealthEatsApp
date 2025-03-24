@@ -11,59 +11,67 @@ import {
 } from "react-native";
 import { useRouter } from "expo-router";
 import { Heart, Save, Edit2 } from "lucide-react-native";
-
-import Header from "./components/Header";
-
-const initialHealthProfile = {
-  personalInfo: {
-    age: "35",
-    height: "5'10\"",
-    weight: "170 lbs",
-    activityLevel: "Moderate",
-  },
-  healthConditions: {
-    highBloodPressure: true,
-    highCholesterol: true,
-    diabetes: false,
-    heartDisease: false,
-    obesity: false,
-    foodAllergies: true,
-  },
-  dietaryRestrictions: {
-    vegetarian: false,
-    vegan: false,
-    glutenFree: true,
-    dairyFree: false,
-    nutFree: true,
-    lowSodium: true,
-  },
-  nutritionGoals: {
-    loseWeight: true,
-    gainMuscle: false,
-    improveEnergy: true,
-    lowerCholesterol: true,
-    stabilizeBloodSugar: false,
-  },
-};
+import { useUserProfileStore } from "./store/userProfileStore";
 
 export default function HealthProfile() {
+  const userProfile = useUserProfileStore();
   const router = useRouter();
+
+  const initialHealthProfile = {
+    personalInfo: {
+      age: userProfile.personalInfo.age,
+      height: userProfile.personalInfo.height,
+      weight: `${userProfile.personalInfo.weight}`,
+      activityLevel: "Moderate",
+    },
+    healthConditions: {
+      highBloodPressure: true,
+      highCholesterol: true,
+      diabetes: false,
+      heartDisease: false,
+      obesity: false,
+      foodAllergies: true,
+    },
+    dietaryRestrictions: {
+      vegetarian: false,
+      vegan: false,
+      glutenFree: true,
+      dairyFree: false,
+      nutFree: true,
+      lowSodium: true,
+    },
+    nutritionGoals: {
+      loseWeight: true,
+      gainMuscle: false,
+      improveEnergy: true,
+      lowerCholesterol: true,
+      stabilizeBloodSugar: false,
+    },
+  };
+
   const [healthProfile, setHealthProfile] = useState(initialHealthProfile);
   const [editMode, setEditMode] = useState(false);
   const [editedProfile, setEditedProfile] = useState(initialHealthProfile);
-
-  const handleEditToggle = () => {
+  const [saveStatus, setSaveStatus ] = useState<'idle' | 'saving' | 'success'>('idle');
+  
+  const handleEditToggle = async () => {
     if (editMode) {
-      // Save changes
+      setSaveStatus('saving');
+      await userProfile.updatePersonalInfo(editedProfile.personalInfo);
       setHealthProfile(editedProfile);
+      setSaveStatus('success');
+      setTimeout(() => setSaveStatus('idle'), 2000);
     } else {
-      // Enter edit mode
       setEditedProfile(healthProfile);
     }
     setEditMode(!editMode);
   };
 
-  const handleTextChange = (section: string, field: string, value: string) => {
+  const handleTextChange = (
+    section: keyof typeof editedProfile,
+    field: string,
+    value: string,
+  ) => {
     setEditedProfile({
       ...editedProfile,
       [section]: {
@@ -73,12 +81,12 @@ export default function HealthProfile() {
     });
   };
 
-  const handleSwitchToggle = (section: any, field: any) => {
+  const handleSwitchToggle = (section: keyof typeof editedProfile, field: string) => {
     setEditedProfile({
       ...editedProfile,
       [section]: {
         ...editedProfile[section],
-        [field]: !editedProfile[section][field],
+        [field as keyof typeof editedProfile[typeof section]]: !editedProfile[section][field as keyof typeof editedProfile[typeof section]],
       },
     });
   };
@@ -108,6 +116,7 @@ export default function HealthProfile() {
                 onChangeText={(text) =>
                   handleTextChange("personalInfo", key, text)
                 }
+                keyboardType={['age', 'height', 'weight'].includes(key) ? 'numeric' : 'default'}
                 className="border border-gray-300 rounded-md px-2 py-1 w-32 text-right"
               />
             ) : (
@@ -121,7 +130,7 @@ export default function HealthProfile() {
     );
   };
 
-  const renderSwitchSection = (title: any, section: any) => {
+  const renderSwitchSection = (title: string, section: keyof typeof healthProfile) => {
     return (
       <View className="bg-white rounded-xl p-4 mb-4 shadow-sm">
         <View className="flex-row justify-between items-center mb-4">
@@ -158,7 +167,6 @@ export default function HealthProfile() {
   return (
     <SafeAreaView className="flex-1 bg-gray-100">
       <StatusBar barStyle="dark-content" backgroundColor="#f0fdf4" />
-      {/* <Header title="Health Profile" showBackButton={true} /> */}
       <View className="px-4 py-2 bg-green-50 flex-row justify-between items-center">
         <View className="flex-row items-center">
           <Heart size={20} color="#16a34a" />
@@ -168,6 +176,8 @@ export default function HealthProfile() {
         </View>
         <TouchableOpacity
           onPress={handleEditToggle}
+          accessibilityLabel={editMode ? "Save changes" : "Edit profile"}
+          accessibilityRole="button"
           className={`flex-row items-center ${editMode ? "bg-green-600" : "bg-gray-600"} px-3 py-1 rounded-full`}
         >
           {editMode ? (

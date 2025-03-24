@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -7,11 +7,22 @@ import {
   SafeAreaView,
   StatusBar,
   TextInput,
+  ActivityIndicator,
+  Alert
 } from "react-native";
 import { useRouter } from "expo-router";
 import { ShoppingCart, Plus, Check, Trash2, X } from "lucide-react-native";
+import { useUserProfileStore } from "./store/userProfileStore";
+import { geminiService } from './services/geminiService';
 
 import Header from "./components/Header";
+
+interface GroceryItem {
+  id: number;
+  name: string;
+  category: string;
+  checked: boolean;
+}
 
 const initialGroceryItems = [
   { id: 1, name: "Oatmeal", category: "Grains", checked: false },
@@ -46,11 +57,50 @@ const categories = [
 
 export default function GroceryList() {
   const router = useRouter();
-  const [groceryItems, setGroceryItems] = useState(initialGroceryItems);
+  const userProfile = useUserProfileStore();
+  const [groceryItems, setGroceryItems] = useState<GroceryItem[]>([]);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [newItemName, setNewItemName] = useState("");
   const [newItemCategory, setNewItemCategory] = useState("Fruits");
   const [showAddItem, setShowAddItem] = useState(false);
+  const [ loading, setLoading ] = useState(true);
+  const [ refreshing, setRefreshing ] = useState(false);
+
+  const fetchGroceryList = async () => {
+    try {
+      setLoading(true);
+      const healthCondition = userProfile.healthProfile.conditions;
+      const dietaryRestrictions = userProfile.healthProfile.restrictions;
+
+      const items = await geminiService.getGroceryList(
+        "healthy weekly meal plan",
+        healthCondition,
+        dietaryRestrictions,
+      );
+      setGroceryItems(items);
+    } catch (error) {
+      console.error("Error fetching grocery list:", error);
+      Alert.alert('Error', "Could not load grocery list. Please try again.");
+
+      setGroceryItems([
+        {id: 1, name: "Oatmeal", category: "Grains", checked: false },
+        {id: 2, name: 'Mixed Berries', category: "Fruits", checked: false },
+        {id: 3, name: 'Honey', category: "Sweeteners", checked: false },
+      ])
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchGroceryList();
+  }, [])
+
+  const handleRefresh = () => {
+    setRefreshing(true);
+    fetchGroceryList();
+  }
 
   const handleCategorySelect = (category : string) => {
     setSelectedCategory(category);
@@ -87,6 +137,15 @@ export default function GroceryList() {
     (item) => selectedCategory === "All" || item.category === selectedCategory,
   );
 
+  if(loading) {
+    return (
+      <SafeAreaView className="flex-1 bg-gray-100 justify-center items-center">
+        <ActivityIndicator size="large" color="#16a34a" />
+        <Text className="mt-4 text-gray-600">Loading grocery list...</Text>
+      </SafeAreaView>
+    )
+  }
+
   return (
     <SafeAreaView className="flex-1 bg-gray-100">
       <StatusBar barStyle="dark-content" backgroundColor="#f0fdf4" />
@@ -98,26 +157,34 @@ export default function GroceryList() {
             Shopping List
           </Text>
         </View>
-        <TouchableOpacity
-          onPress={() => setShowAddItem(!showAddItem)}
-          className="flex-row items-center bg-green-600 px-3 py-1 rounded-full"
-        >
-          {showAddItem ? (
-            <>
-              <X size={16} color="white" />
-              <Text className="text-white ml-1 font-medium text-sm">
-                Cancel
-              </Text>
-            </>
-          ) : (
-            <>
-              <Plus size={16} color="white" />
-              <Text className="text-white ml-1 font-medium text-sm">
-                Add Item
-              </Text>
-            </>
-          )}
-        </TouchableOpacity>
+        <View className="flex-row space-x-2">
+          <TouchableOpacity
+            onPress={() => handleRefresh()}
+            className="flex-row items-center bg-green-600 px-4 py-1 rounded-full"
+          >
+            <Text className="text-white ml-1 font-medium text-sm">Refresh</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => setShowAddItem(!showAddItem)}
+            className="flex-row items-center bg-green-600 px-3 py-1 rounded-full"
+          >
+            {showAddItem ? (
+              <>
+                <X size={16} color="white" />
+                <Text className="text-white ml-1 font-medium text-sm">
+                  Cancel
+                </Text>
+              </>
+            ) : (
+              <>
+                <Plus size={16} color="white" />
+                <Text className="text-white ml-1 font-medium text-sm">
+                  Add Item
+                </Text>
+              </>
+            )}
+          </TouchableOpacity>
+        </View>
       </View>
 
       {showAddItem && (

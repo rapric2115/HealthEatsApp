@@ -7,6 +7,7 @@ import {
   ChevronRight,
 } from "lucide-react-native";
 import { useRouter } from 'expo-router';
+import { useUserProfileStore } from '../store/userProfileStore';
 
 interface DashboardSummaryProps {
   healthProfile?: {
@@ -44,6 +45,9 @@ const DashboardSummary = ({
   },
 }: DashboardSummaryProps) => {
   const router = useRouter();
+  const userProfile = useUserProfileStore();
+
+  console.log('user profile from dashboard: ', userProfile);
 
   return (
     <View className="w-full bg-white p-4 rounded-lg shadow-sm">
@@ -52,7 +56,7 @@ const DashboardSummary = ({
       </Text>
 
       {/* Health Profile Summary */}
-      <TouchableOpacity className="flex-row items-center mb-3" onPress={() => router.push(healthProfile.router)}>
+      <TouchableOpacity className="flex-row items-center mb-3" onPress={() => router.push(healthProfile.router as "/health-profile")}>
         <View className="w-8 h-8 bg-red-100 rounded-full items-center justify-center mr-3">
           <Heart size={18} color="#ef4444" />
         </View>
@@ -61,16 +65,16 @@ const DashboardSummary = ({
             Health Profile
           </Text>
           <Text className="text-xs text-gray-500">
-            {healthProfile.conditions.join(", ")}
-            {healthProfile.restrictions.length > 0 &&
-              ` • ${healthProfile.restrictions.join(", ")}`}
+            {userProfile.healthProfile.conditions.join(", ")}
+            {userProfile.healthProfile.restrictions.length > 0 &&
+              ` • ${userProfile.healthProfile.restrictions.join(", ")}`}
           </Text>
         </View>
         <ChevronRight size={16} color="#9ca3af" />
       </TouchableOpacity>
 
       {/* Meal Plan Status */}
-      <TouchableOpacity className="flex-row items-center mb-3" onPress={() => router.push(mealPlanStatus.router)}>
+      <TouchableOpacity className="flex-row items-center mb-3" onPress={() => router.push(mealPlanStatus.router as "/meal-planning")}>
         <View className="w-8 h-8 bg-green-100 rounded-full items-center justify-center mr-3">
           <Utensils size={18} color="#10b981" />
         </View>
@@ -85,7 +89,7 @@ const DashboardSummary = ({
       </TouchableOpacity>
 
       {/* Grocery List Status */}
-      <TouchableOpacity className="flex-row items-center" onPress={() => router.push(groceryListStatus.router)}>
+      <TouchableOpacity className="flex-row items-center" onPress={() => router.push(groceryListStatus.router as "/grocery-list")}>
         <View className="w-8 h-8 bg-blue-100 rounded-full items-center justify-center mr-3">
           <ShoppingCart size={18} color="#3b82f6" />
         </View>

@@ -9,6 +9,7 @@ import {
 import { Sparkles, ChevronDown, ChevronUp } from "lucide-react-native";
 import type { NutritionRecommendation } from "../services/geminiService";
 import { geminiService } from "../services/geminiService";
+import { useUserProfileStore } from "../store/userProfileStore";
 
 interface AIRecommendationsProps {
   healthConditions?: string[];
@@ -16,9 +17,10 @@ interface AIRecommendationsProps {
 }
 
 export default function AIRecommendations({
-  healthConditions = ["High Cholesterol", "Type 2 Diabetes"],
-  dietaryRestrictions = ["Gluten-Free"],
+  healthConditions,
+  dietaryRestrictions,
 }: AIRecommendationsProps) {
+  const userProfile = useUserProfileStore();
   const [recommendations, setRecommendations] = useState<
     NutritionRecommendation[]
   >([]);
@@ -34,9 +36,15 @@ export default function AIRecommendations({
     setLoading(true);
     setError(null);
     try {
+      // Use provided props or fall back to user profile data
+      const conditions =
+        healthConditions || userProfile.healthProfile.conditions;
+      const restrictions =
+        dietaryRestrictions || userProfile.healthProfile.restrictions;
+
       const data = await geminiService.getNutritionRecommendations(
-        healthConditions,
-        dietaryRestrictions,
+        conditions,
+        restrictions,
       );
       setRecommendations(data);
     } catch (err) {

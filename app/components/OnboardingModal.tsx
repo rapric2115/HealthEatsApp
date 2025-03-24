@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -23,6 +23,7 @@ import {
   Scale,
   Heart,
 } from "lucide-react-native";
+import { useUserProfileStore } from "../store/userProfileStore";
 
 type OnboardingStep =
   | "welcome"
@@ -43,18 +44,36 @@ const OnboardingModal = ({
   onDismiss = () => {},
 }: OnboardingModalProps) => {
   const [currentStep, setCurrentStep] = useState<OnboardingStep>("welcome");
-  const [selectedConditions, setSelectedConditions] = useState<string[]>([]);
-  const [selectedRestrictions, setSelectedRestrictions] = useState<string[]>(
-    [],
+
+  // Get user profile store methods
+  const {
+    personalInfo,
+    healthProfile,
+    updatePersonalInfo,
+    updateHealthConditions,
+    updateDietaryRestrictions,
+    updateFoodPreferences,
+  } = useUserProfileStore();
+
+  // Local state for form handling
+  const [selectedConditions, setSelectedConditions] = useState<string[]>(
+    healthProfile.conditions,
   );
-  const [selectedPreferences, setSelectedPreferences] = useState<string[]>([]);
-  const [personalInfo, setPersonalInfo] = useState({
-    name: "",
-    age: "",
-    gender: "",
-    weight: "",
-    height: "",
-  });
+  const [selectedRestrictions, setSelectedRestrictions] = useState<string[]>(
+    healthProfile.restrictions,
+  );
+  const [selectedPreferences, setSelectedPreferences] = useState<string[]>(
+    healthProfile.preferences,
+  );
+  const [localPersonalInfo, setLocalPersonalInfo] = useState(personalInfo);
+
+  // Initialize local state from store
+  useEffect(() => {
+    setSelectedConditions(healthProfile.conditions);
+    setSelectedRestrictions(healthProfile.restrictions);
+    setSelectedPreferences(healthProfile.preferences);
+    setLocalPersonalInfo(personalInfo);
+  }, [healthProfile, personalInfo]);
 
   if (!isVisible) return null;
 
@@ -64,15 +83,23 @@ const OnboardingModal = ({
         setCurrentStep("personal");
         break;
       case "personal":
+        // Save personal info to store
+        updatePersonalInfo(localPersonalInfo);
         setCurrentStep("conditions");
         break;
       case "conditions":
+        // Save health conditions to store
+        updateHealthConditions(selectedConditions);
         setCurrentStep("dietary");
         break;
       case "dietary":
+        // Save dietary restrictions to store
+        updateDietaryRestrictions(selectedRestrictions);
         setCurrentStep("preferences");
         break;
       case "preferences":
+        // Save food preferences to store
+        updateFoodPreferences(selectedPreferences);
         onComplete();
         break;
     }
@@ -150,9 +177,9 @@ const OnboardingModal = ({
           <TextInput
             className="h-12 bg-white rounded px-3 border border-gray-200"
             placeholder="Enter your full name"
-            value={personalInfo.name}
+            value={localPersonalInfo.name}
             onChangeText={(text) =>
-              setPersonalInfo({ ...personalInfo, name: text })
+              setLocalPersonalInfo({ ...localPersonalInfo, name: text })
             }
           />
         </View>
@@ -163,9 +190,9 @@ const OnboardingModal = ({
             className="h-12 bg-white rounded px-3 border border-gray-200"
             placeholder="Enter your age"
             keyboardType="numeric"
-            value={personalInfo.age}
+            value={localPersonalInfo.age}
             onChangeText={(text) =>
-              setPersonalInfo({ ...personalInfo, age: text })
+              setLocalPersonalInfo({ ...localPersonalInfo, age: text })
             }
           />
         </View>
@@ -174,14 +201,14 @@ const OnboardingModal = ({
           <Text className="text-gray-600 mb-1 text-sm">Gender</Text>
           <View className="flex-row">
             <TouchableOpacity
-              className={`flex-1 h-12 rounded mr-2 items-center justify-center ${personalInfo.gender === "Male" ? "bg-blue-500" : "bg-white border border-gray-200"}`}
+              className={`flex-1 h-12 rounded mr-2 items-center justify-center ${localPersonalInfo.gender === "Male" ? "bg-blue-500" : "bg-white border border-gray-200"}`}
               onPress={() =>
-                setPersonalInfo({ ...personalInfo, gender: "Male" })
+                setLocalPersonalInfo({ ...localPersonalInfo, gender: "Male" })
               }
             >
               <Text
                 className={
-                  personalInfo.gender === "Male"
+                  localPersonalInfo.gender === "Male"
                     ? "text-white"
                     : "text-gray-700"
                 }
@@ -190,14 +217,14 @@ const OnboardingModal = ({
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              className={`flex-1 h-12 rounded items-center justify-center ${personalInfo.gender === "Female" ? "bg-blue-500" : "bg-white border border-gray-200"}`}
+              className={`flex-1 h-12 rounded items-center justify-center ${localPersonalInfo.gender === "Female" ? "bg-blue-500" : "bg-white border border-gray-200"}`}
               onPress={() =>
-                setPersonalInfo({ ...personalInfo, gender: "Female" })
+                setLocalPersonalInfo({ ...localPersonalInfo, gender: "Female" })
               }
             >
               <Text
                 className={
-                  personalInfo.gender === "Female"
+                  localPersonalInfo.gender === "Female"
                     ? "text-white"
                     : "text-gray-700"
                 }
@@ -221,9 +248,9 @@ const OnboardingModal = ({
             className="h-12 bg-white rounded px-3 border border-gray-200"
             placeholder="Enter your weight"
             keyboardType="numeric"
-            value={personalInfo.weight}
+            value={localPersonalInfo.weight}
             onChangeText={(text) =>
-              setPersonalInfo({ ...personalInfo, weight: text })
+              setLocalPersonalInfo({ ...localPersonalInfo, weight: text })
             }
           />
         </View>
@@ -234,9 +261,9 @@ const OnboardingModal = ({
             className="h-12 bg-white rounded px-3 border border-gray-200"
             placeholder="Enter your height"
             keyboardType="numeric"
-            value={personalInfo.height}
+            value={localPersonalInfo.height}
             onChangeText={(text) =>
-              setPersonalInfo({ ...personalInfo, height: text })
+              setLocalPersonalInfo({ ...localPersonalInfo, height: text })
             }
           />
         </View>
