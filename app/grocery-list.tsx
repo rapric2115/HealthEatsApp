@@ -14,6 +14,7 @@ import { useRouter } from "expo-router";
 import { ShoppingCart, Plus, Check, Trash2, X } from "lucide-react-native";
 import { useUserProfileStore } from "./store/userProfileStore";
 import { geminiService } from './services/geminiService';
+import { useTotalGroceryListStore } from './store/totalStore';
 
 import Header from "./components/Header";
 
@@ -65,6 +66,9 @@ export default function GroceryList() {
   const [showAddItem, setShowAddItem] = useState(false);
   const [ loading, setLoading ] = useState(true);
   const [ refreshing, setRefreshing ] = useState(false);
+  const setTotal = useTotalGroceryListStore((state) => state.setTotal);
+  const setCheckedItems = useTotalGroceryListStore((state) => state.setCheckedItems);
+
 
   const fetchGroceryList = async () => {
     try {
@@ -97,6 +101,14 @@ export default function GroceryList() {
     fetchGroceryList();
   }, [])
 
+  useEffect(() => {
+    if (groceryItems.length > 0) {
+      const groceryItemsTotal = groceryItems.length;
+      setTotal(groceryItemsTotal);
+    }
+  }, [groceryItems, setTotal]);
+
+
   const handleRefresh = () => {
     setRefreshing(true);
     fetchGroceryList();
@@ -112,6 +124,8 @@ export default function GroceryList() {
         item.id === id ? { ...item, checked: !item.checked } : item,
       ),
     );
+    const newCheckedCount = groceryItems.filter(item => item.checked).length;
+    setCheckedItems(newCheckedCount); // Ensure setCheckedItems is a valid function
   };
 
   const handleDeleteItem = (id: number) => {

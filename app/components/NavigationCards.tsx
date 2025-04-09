@@ -14,7 +14,13 @@ interface NavigationCardsProps {
 }
 
 const NavigationCards = ({ cards }: NavigationCardsProps) => {
-  const defaultCards = [
+  const defaultCards: Array<{
+    title: string;
+    description: string;
+    icon: any;
+    route: "/health-profile" | "/meal-planning" | "/grocery-list" | "/nutrition-tips";
+    color: string;
+  }> = [
     {
       title: "Health Profile",
       description: "Manage your health conditions and preferences",

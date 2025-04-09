@@ -25,7 +25,7 @@ const daysOfWeek = [
 ];
 
 // Simplified initial state
-const initialMealPlan = daysOfWeek.reduce((acc, day) => {
+const initialMealPlan = daysOfWeek.reduce((acc: Record<string, { breakfast: string[]; lunch: string[]; dinner: string[]; snacks: string[] }>, day) => {
   acc[day] = {
     breakfast: [],
     lunch: [],
@@ -33,7 +33,7 @@ const initialMealPlan = daysOfWeek.reduce((acc, day) => {
     snacks: [],
   };
   return acc;
-}, {});
+}, {} as Record<string, { breakfast: string[]; lunch: string[]; dinner: string[]; snacks: string[] }>);
 
 export default function MealPlanning() {
   const router = useRouter();
@@ -66,7 +66,7 @@ export default function MealPlanning() {
       );
 
       // Transform the WeeklyMenu[] into our state format
-      const newMealPlan = weeklyMenu.reduce((acc, dayPlan) => {
+      const newMealPlan = weeklyMenu.reduce((acc: Record<string, { breakfast: string[]; lunch: string[]; dinner: string[]; snacks: string[]; }>, dayPlan) => {
         acc[dayPlan.day] = {
           breakfast: dayPlan.meals.breakfast,
           lunch: dayPlan.meals.lunch,
@@ -160,7 +160,7 @@ export default function MealPlanning() {
       {/* Meal list */}
       <ScrollView className="flex-1 bg-gray-100 p-4">
         {["breakfast", "lunch", "dinner", "snacks"].map((mealType) => {
-          const meals = mealPlan[selectedDay]?.[mealType] || [];
+          const meals = mealPlan[selectedDay]?.[mealType as "breakfast" | "lunch" | "dinner" | "snacks"] || [];
           
           return (
             <View key={mealType} className="bg-white rounded-xl p-4 mb-4 shadow-sm">

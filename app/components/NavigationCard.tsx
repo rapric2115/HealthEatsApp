@@ -8,7 +8,7 @@ interface NavigationCardProps {
   title: string;
   description: string;
   icon: LucideIcon;
-  route: `/${string}`;
+  route: "/health-profile" | "/meal-planning" | "/grocery-list" | "/nutrition-tips";
   color: string;
 }
 

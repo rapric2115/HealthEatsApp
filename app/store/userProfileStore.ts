@@ -6,7 +6,6 @@ export interface HealthProfile {
   conditions: string[];
   restrictions: string[];
   preferences: string[];
-  router: string;
 }
 
 export interface PersonalInfo {
@@ -15,6 +14,28 @@ export interface PersonalInfo {
   gender: string;
   weight: string;
   height: string;
+}
+
+export interface SubscriptionInfo {
+  tier: "free" | "basic" | "premium";
+  active: boolean;
+  expiryDate: string | null;
+  features: string[];
+  aiCreditsRemaining: number;
+}
+
+export interface MealPlan {
+  id: string;
+  name: string;
+  date: string;
+  plan: Record<string, Record<string, any>>;
+}
+
+export interface GroceryList {
+  id: string;
+  name: string;
+  date: string;
+  items: any[];
 }
 
 type UserProfileState = {
@@ -30,6 +51,9 @@ type UserProfileState = {
     totalItems: number;
     router: string;
   };
+  subscription: SubscriptionInfo;
+  savedMealPlans: MealPlan[];
+  savedGroceryLists: GroceryList[];
   updatePersonalInfo: (info: Partial<PersonalInfo>) => void;
   updateHealthConditions: (conditions: string[]) => void;
   updateDietaryRestrictions: (restrictions: string[]) => void;
@@ -42,11 +66,20 @@ type UserProfileState = {
     itemsChecked: number;
     totalItems: number;
   }) => void;
+  updateSubscription: (info: Partial<SubscriptionInfo>) => void;
+  useAiCredit: () => boolean;
+  saveMealPlan: (
+    name: string,
+    plan: Record<string, Record<string, any>>,
+  ) => void;
+  saveGroceryList: (name: string, items: any[]) => void;
+  deleteMealPlan: (id: string) => void;
+  deleteGroceryList: (id: string) => void;
 };
 
-export const useUserProfileStore = create<UserProfileState, [["zustand/persist", unknown]]>(
-  persist(
-    (set) => ({
+export const useUserProfileStore = create<UserProfileState>()(
+  persist<UserProfileState>(
+    (set, get) => ({
       personalInfo: {
         name: "",
         age: "",
@@ -58,18 +91,26 @@ export const useUserProfileStore = create<UserProfileState, [["zustand/persist",
         conditions: [],
         restrictions: [],
         preferences: [],
-        router: '/health-profile'
       },
       mealPlanStatus: {
         daysPlanned: 0,
         totalDays: 7,
-        router: '/meal-planning'
+        router: "",
       },
       groceryListStatus: {
         itemsChecked: 0,
         totalItems: 0,
-        router: '/grocery-list'
+        router: "",
       },
+      subscription: {
+        tier: "free",
+        active: true,
+        expiryDate: null,
+        features: ["Basic health profile", "Limited meal suggestions"],
+        aiCreditsRemaining: 5,
+      },
+      savedMealPlans: [],
+      savedGroceryLists: [],
       updatePersonalInfo: (info) =>
         set((state) => ({
           personalInfo: { ...state.personalInfo, ...info },
@@ -94,6 +135,62 @@ export const useUserProfileStore = create<UserProfileState, [["zustand/persist",
         set((state) => ({
           groceryListStatus: { ...state.groceryListStatus, ...status },
         })),
+      updateSubscription: (info) =>
+        set((state) => ({
+          subscription: { ...state.subscription, ...info },
+        })),
+      saveMealPlan: (name, plan) =>
+        set((state) => {
+          const newMealPlan = {
+            id: Date.now().toString(),
+            name,
+            date: new Date().toISOString(),
+            plan,
+          };
+          return {
+            savedMealPlans: [...state.savedMealPlans, newMealPlan],
+          };
+        }),
+      saveGroceryList: (name, items) =>
+        set((state) => {
+          const newGroceryList = {
+            id: Date.now().toString(),
+            name,
+            date: new Date().toISOString(),
+            items,
+          };
+          return {
+            savedGroceryLists: [...state.savedGroceryLists, newGroceryList],
+          };
+        }),
+      deleteMealPlan: (id) =>
+        set((state) => ({
+          savedMealPlans: state.savedMealPlans.filter((plan) => plan.id !== id),
+        })),
+      deleteGroceryList: (id) =>
+        set((state) => ({
+          savedGroceryLists: state.savedGroceryLists.filter(
+            (list) => list.id !== id,
+          ),
+        })),
+      useAiCredit: () => {
+        const state = get();
+        if (
+          state.subscription.tier === "premium" ||
+          state.subscription.aiCreditsRemaining > 0
+        ) {
+          if (state.subscription.tier !== "premium") {
+            set((state) => ({
+              subscription: {
+                ...state.subscription,
+                aiCreditsRemaining: state.subscription.aiCreditsRemaining - 1,
+              },
+            }));
+          }
+          return true;
+        }
+        return false;
+      },
     }),
     {
       name: "user-profile-storage",

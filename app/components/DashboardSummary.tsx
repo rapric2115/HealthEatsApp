@@ -8,22 +8,20 @@ import {
 } from "lucide-react-native";
 import { useRouter } from 'expo-router';
 import { useUserProfileStore } from '../store/userProfileStore';
+import { useTotalGroceryListStore } from "../store/totalStore";
 
 interface DashboardSummaryProps {
   healthProfile?: {
     conditions: string[];
     restrictions: string[];
-    router: string;
   };
   mealPlanStatus?: {
     daysPlanned: number;
     totalDays: number;
-    router: string;
   };
   groceryListStatus?: {
     itemsChecked: number;
     totalItems: number;
-    router: string;
   };
 }
 
@@ -31,21 +29,19 @@ const DashboardSummary = ({
   healthProfile = {
     conditions: ["High Cholesterol", "Type 2 Diabetes"],
     restrictions: ["No Gluten"],
-    router: '/health-profile',
   },
   mealPlanStatus = {
     daysPlanned: 5,
     totalDays: 7,
-    router: '/meal-planning',
   },
   groceryListStatus = {
     itemsChecked: 12,
     totalItems: 28,
-    router: '/grocery-list',
   },
 }: DashboardSummaryProps) => {
   const router = useRouter();
   const userProfile = useUserProfileStore();
+  const {total, checkedItems} = useTotalGroceryListStore();
 
   console.log('user profile from dashboard: ', userProfile);
 
@@ -56,7 +52,7 @@ const DashboardSummary = ({
       </Text>
 
       {/* Health Profile Summary */}
-      <TouchableOpacity className="flex-row items-center mb-3" onPress={() => router.push(healthProfile.router as "/health-profile")}>
+      <TouchableOpacity className="flex-row items-center mb-3" onPress={() => router.push("/health-profile")}>
         <View className="w-8 h-8 bg-red-100 rounded-full items-center justify-center mr-3">
           <Heart size={18} color="#ef4444" />
         </View>
@@ -74,7 +70,7 @@ const DashboardSummary = ({
       </TouchableOpacity>
 
       {/* Meal Plan Status */}
-      <TouchableOpacity className="flex-row items-center mb-3" onPress={() => router.push(mealPlanStatus.router as "/meal-planning")}>
+      <TouchableOpacity className="flex-row items-center mb-3" onPress={() => router.push("/meal-planning")}>
         <View className="w-8 h-8 bg-green-100 rounded-full items-center justify-center mr-3">
           <Utensils size={18} color="#10b981" />
         </View>
@@ -89,7 +85,7 @@ const DashboardSummary = ({
       </TouchableOpacity>
 
       {/* Grocery List Status */}
-      <TouchableOpacity className="flex-row items-center" onPress={() => router.push(groceryListStatus.router as "/grocery-list")}>
+      <TouchableOpacity className="flex-row items-center" onPress={() => router.push("/grocery-list")}>
         <View className="w-8 h-8 bg-blue-100 rounded-full items-center justify-center mr-3">
           <ShoppingCart size={18} color="#3b82f6" />
         </View>
@@ -98,7 +94,7 @@ const DashboardSummary = ({
             Grocery List
           </Text>
           <Text className="text-xs text-gray-500">
-            {groceryListStatus.itemsChecked} of {groceryListStatus.totalItems}{" "}
+            {checkedItems} of {total}{" "}
             items checked
           </Text>
         </View>
