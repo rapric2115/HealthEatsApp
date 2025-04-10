@@ -25,6 +25,10 @@ import {
 } from "lucide-react-native";
 import { useUserProfileStore } from "../store/userProfileStore";
 
+//Internationalization with i18n
+import { useTranslation } from 'react-i18next';
+import LanguageSwitcher from "./LanguageSwitcher";
+
 type OnboardingStep =
   | "welcome"
   | "personal"
@@ -44,6 +48,8 @@ const OnboardingModal = ({
   onDismiss = () => {},
 }: OnboardingModalProps) => {
   const [currentStep, setCurrentStep] = useState<OnboardingStep>("welcome");
+
+  const { t, i18n } = useTranslation();
 
   // Get user profile store methods
   const {
@@ -141,19 +147,26 @@ const OnboardingModal = ({
 
   const renderWelcomeStep = () => (
     <View className="items-center justify-center p-6">
+       <View className="w-full mb-4">
+       <Text className="text-2xl font-bold text-center mb-4">
+        {t("common.set_Lang")}
+        {/* Welcome to Healthy Meals */}
+      </Text>
+        <LanguageSwitcher />
+      </View>
       <Text className="text-2xl font-bold text-center mb-4">
-        Welcome to Healthy Meals
+        {t("common.welcome")}
+        {/* Welcome to Healthy Meals */}
       </Text>
       <Text className="text-base text-center text-gray-600 mb-8">
-        Let's set up your health profile to provide personalized nutrition
-        recommendations just for you.
+        {t("common.welcome_message")}
       </Text>
       <View className="w-full">
         <TouchableOpacity
           className="bg-blue-500 py-3 px-6 rounded-lg flex-row items-center justify-center"
           onPress={handleNextStep}
         >
-          <Text className="text-white font-semibold mr-2">Get Started</Text>
+          <Text className="text-white font-semibold mr-2">{t("common.welcome_Btn")}</Text>
           <ChevronRight size={20} color="white" />
         </TouchableOpacity>
       </View>
@@ -162,18 +175,18 @@ const OnboardingModal = ({
 
   const renderPersonalInfoStep = () => (
     <ScrollView className="p-6">
-      <Text className="text-xl font-bold mb-6">Personal Information</Text>
+      <Text className="text-xl font-bold mb-6">{t("common.personal_info")}</Text>
 
       <View className="bg-gray-100 rounded-lg p-4 mb-4">
         <View className="flex-row items-center mb-4">
           <User size={20} color="#4B5563" />
           <Text className="ml-2 text-gray-700 font-medium">
-            Basic Information
+            {t("common.basic_info")}
           </Text>
         </View>
 
         <View className="mb-4">
-          <Text className="text-gray-600 mb-1 text-sm">Full Name</Text>
+          <Text className="text-gray-600 mb-1 text-sm">{t("common.full_name")}</Text>
           <TextInput
             className="h-12 bg-white rounded px-3 border border-gray-200"
             placeholder="Enter your full name"
@@ -185,7 +198,7 @@ const OnboardingModal = ({
         </View>
 
         <View className="mb-4">
-          <Text className="text-gray-600 mb-1 text-sm">Age</Text>
+          <Text className="text-gray-600 mb-1 text-sm">{t("common.age")}</Text>
           <TextInput
             className="h-12 bg-white rounded px-3 border border-gray-200"
             placeholder="Enter your age"
@@ -198,7 +211,7 @@ const OnboardingModal = ({
         </View>
 
         <View className="mb-2">
-          <Text className="text-gray-600 mb-1 text-sm">Gender</Text>
+          <Text className="text-gray-600 mb-1 text-sm">{t("common.gender")}</Text>
           <View className="flex-row">
             <TouchableOpacity
               className={`flex-1 h-12 rounded mr-2 items-center justify-center ${localPersonalInfo.gender === "Male" ? "bg-blue-500" : "bg-white border border-gray-200"}`}
@@ -213,7 +226,7 @@ const OnboardingModal = ({
                     : "text-gray-700"
                 }
               >
-                Male
+                {t("common.male")}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -229,7 +242,7 @@ const OnboardingModal = ({
                     : "text-gray-700"
                 }
               >
-                Female
+                {t("common.female")}
               </Text>
             </TouchableOpacity>
           </View>
@@ -239,11 +252,11 @@ const OnboardingModal = ({
       <View className="bg-gray-100 rounded-lg p-4 mb-6">
         <View className="flex-row items-center mb-4">
           <Scale size={20} color="#4B5563" />
-          <Text className="ml-2 text-gray-700 font-medium">Health Metrics</Text>
+          <Text className="ml-2 text-gray-700 font-medium">{t("common.health_metric")}</Text>
         </View>
 
         <View className="mb-4">
-          <Text className="text-gray-600 mb-1 text-sm">Weight (kg)</Text>
+          <Text className="text-gray-600 mb-1 text-sm">{t("common.weight")} (kg)</Text>
           <TextInput
             className="h-12 bg-white rounded px-3 border border-gray-200"
             placeholder="Enter your weight"
@@ -256,7 +269,7 @@ const OnboardingModal = ({
         </View>
 
         <View className="mb-2">
-          <Text className="text-gray-600 mb-1 text-sm">Height (cm)</Text>
+          <Text className="text-gray-600 mb-1 text-sm">{t("common.height")} (cm)</Text>
           <TextInput
             className="h-12 bg-white rounded px-3 border border-gray-200"
             placeholder="Enter your height"
@@ -273,7 +286,7 @@ const OnboardingModal = ({
         className="bg-blue-500 py-3 px-6 rounded-lg flex-row items-center justify-center"
         onPress={handleNextStep}
       >
-        <Text className="text-white font-semibold mr-2">Continue</Text>
+        <Text className="text-white font-semibold mr-2">{t("common.continue")}</Text>
         <ChevronRight size={20} color="white" />
       </TouchableOpacity>
     </ScrollView>
@@ -281,20 +294,20 @@ const OnboardingModal = ({
 
   const renderHealthConditionsStep = () => {
     const conditions = [
-      "High Cholesterol",
-      "High Blood Pressure",
-      "Diabetes Type 2",
-      "Heart Disease",
-      "Obesity",
-      "Digestive Issues",
-      "None of the above",
+      t("health.conditions.high_cholesterol"),
+      t("health.conditions.high_blood_pressure"),
+      t("health.conditions.diabetes_type_2"),
+      t("health.conditions.heart_disease"),
+      t("health.conditions.obesity"),
+      t("health.conditions.digestive_issues"),
+      t("health.conditions.none"),
     ];
 
     return (
       <View className="p-6">
-        <Text className="text-xl font-bold mb-2">Health Conditions</Text>
+        <Text className="text-xl font-bold mb-2">{t("health.conditions_title")}</Text>
         <Text className="text-gray-600 mb-6">
-          Select any conditions you have or are at risk for:
+          {t("health.conditions_subtitle")}:
         </Text>
 
         <ScrollView className="mb-6">
@@ -326,7 +339,7 @@ const OnboardingModal = ({
           className="bg-blue-500 py-3 px-6 rounded-lg flex-row items-center justify-center"
           onPress={handleNextStep}
         >
-          <Text className="text-white font-semibold mr-2">Continue</Text>
+          <Text className="text-white font-semibold mr-2">{t("common.continue")}</Text>
           <ChevronRight size={20} color="white" />
         </TouchableOpacity>
       </View>
@@ -335,21 +348,21 @@ const OnboardingModal = ({
 
   const renderDietaryRestrictionsStep = () => {
     const restrictions = [
-      { name: "Gluten-Free", icon: <Wheat size={20} color="#4B5563" /> },
-      { name: "Dairy-Free", icon: <Milk size={20} color="#4B5563" /> },
-      { name: "Vegetarian", icon: <Carrot size={20} color="#4B5563" /> },
-      { name: "Vegan", icon: <Apple size={20} color="#4B5563" /> },
-      { name: "Pescatarian", icon: <Fish size={20} color="#4B5563" /> },
-      { name: "Low-Sodium", icon: <Coffee size={20} color="#4B5563" /> },
-      { name: "Low-Sugar", icon: <Coffee size={20} color="#4B5563" /> },
-      { name: "No Restrictions", icon: <Egg size={20} color="#4B5563" /> },
+      { name: t("health.restrictions.gluten_free"), icon: <Wheat size={20} color="#4B5563" /> },
+      { name: t("health.restrictions.dairy_free"), icon: <Milk size={20} color="#4B5563" /> },
+      { name: t("health.restrictions.vegetarian"), icon: <Carrot size={20} color="#4B5563" /> },
+      { name: t("health.restrictions.vegan"), icon: <Apple size={20} color="#4B5563" /> },
+      { name: t("health.restrictions.pescadetarian"), icon: <Fish size={20} color="#4B5563" /> },
+      { name: t("health.restrictions.low-Sodium"), icon: <Coffee size={20} color="#4B5563" /> },
+      { name: t("health.restrictions.low-sugar"), icon: <Coffee size={20} color="#4B5563" /> },
+      { name: t("health.restrictions.none"), icon: <Egg size={20} color="#4B5563" /> },
     ];
 
     return (
       <View className="p-6">
-        <Text className="text-xl font-bold mb-2">Dietary Restrictions</Text>
+        <Text className="text-xl font-bold mb-2">{t("health.restriction_title")}</Text>
         <Text className="text-gray-600 mb-6">
-          Select any dietary restrictions you have:
+          {t("health.restriction_subtitle")}
         </Text>
 
         <ScrollView className="mb-6">
@@ -381,7 +394,7 @@ const OnboardingModal = ({
           className="bg-blue-500 py-3 px-6 rounded-lg flex-row items-center justify-center"
           onPress={handleNextStep}
         >
-          <Text className="text-white font-semibold mr-2">Continue</Text>
+          <Text className="text-white font-semibold mr-2">{t("common.continue")}</Text>
           <ChevronRight size={20} color="white" />
         </TouchableOpacity>
       </View>
@@ -390,23 +403,23 @@ const OnboardingModal = ({
 
   const renderFoodPreferencesStep = () => {
     const preferences = [
-      "Mediterranean",
-      "Asian",
-      "Mexican",
-      "Italian",
-      "Indian",
-      "American",
-      "Middle Eastern",
-      "Quick & Easy Meals",
-      "Batch Cooking",
-      "Budget-Friendly",
+      t("preferences.cuisines.mediterranean"),
+      t("preferences.cuisines.asian"),
+      t("preferences.cuisines.mexican"),
+      t("preferences.cuisines.italian"),
+      t("preferences.cuisines.indian"),
+      t("preferences.cuisines.american"),
+      t("preferences.cuisines.middle_eastern"),
+      t("preferences.cuisines.quick_easy_meals"),
+      t("preferences.cuisines.batch_cooking"),
+      t("preferences.cuisines.budget_friendly"),
     ];
 
     return (
       <View className="p-6">
-        <Text className="text-xl font-bold mb-2">Food Preferences</Text>
+        <Text className="text-xl font-bold mb-2">{t("preferences.preferences_title")}</Text>
         <Text className="text-gray-600 mb-6">
-          Select your favorite cuisines and meal types:
+          {t("preferences.preferences_subtitle")}
         </Text>
 
         <ScrollView className="mb-6">
@@ -437,7 +450,7 @@ const OnboardingModal = ({
           className="bg-blue-500 py-3 px-6 rounded-lg flex-row items-center justify-center"
           onPress={handleNextStep}
         >
-          <Text className="text-white font-semibold mr-2">Complete Setup</Text>
+          <Text className="text-white font-semibold mr-2">{t("preferences.preferences_btn")}</Text>
           <ChevronRight size={20} color="white" />
         </TouchableOpacity>
       </View>

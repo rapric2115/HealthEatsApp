@@ -1,0 +1,62 @@
+{
+    "common": {
+      "set_Lang": "Let set the Language first",
+      "welcome": "Welcome to Healthy Meals",
+      "welcome_message": "Let's set up your health profile to provide personalized nutrition recommendations just for you.",
+      "welcome_Btn": "Get Started",
+      "personal_info": "Personal Information",
+      "basic_info": "Basic Information",
+      "full_name": "Full Name",
+      "age": "Age",
+      "gender": "Gender",
+      "weight": "Weight",
+      "height": "Height",
+      "male": "Male",
+      "female": "Female",
+      "health_metric": "Health Metric",
+      "continue": "Continue"
+    },
+    "health": {
+        "conditions_title": "Health Conditions",
+        "conditions_subtitle": "Select any conditions you have or are at risk for:",
+        "conditions": {
+            "high_cholesterol": "High Cholesterol",
+            "high_blood_pressure": "High Blood Pressure",
+            "diabetes_type_2": "Diabetes Type 2",
+            "heart_disease": "Heart Disease",
+            "obesity": "Obesity",
+            "digestive_issues": "Digestive Issues",
+            "none": "None of the above"
+        },
+        "restriction_title": "Dietary Restrictions",
+        "restriction_subtitle": "Select any dietary restrictions you have:",
+        "restrictions": {
+            "gluten_free": "Gluten Free",
+            "dairy_free": "Dairy Free",
+            "vegan": "Vegan",
+            "vegetarian": "Vegetarian",
+            "pescadetarian": "Pescatarian",
+            "low-Sodium": "Low Sodium",
+            "low-sugar": "Low Sugar",
+            "none": "No Restrictions"
+        }
+    },
+    "preferences": {
+        "preferences_title": "Food Preferences",
+        "preferences_subtitle": "Select your favorite cuisines and meal types:",
+        "cuisines": {
+            "mediterranean": "Mediterranean",
+            "asian": "Asian",
+            "mexican": "Mexican",
+            "italian": "Italian",
+            "indian": "Indian",
+            "american": "American",
+            "middle_eastern": "Middle Eastern",
+            "quick_easy_meals": "Quick & Easy Meals",
+            "batch_cooking": "Batch Cooking",
+            "budget_friendly": "Budget-Friendly"
+        },
+        "preferences_btn": "Complete Preferences"
+    }
+      
+  }

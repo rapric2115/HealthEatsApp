@@ -1,6 +1,10 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { useUserProfileStore } from "../store/userProfileStore";
 
+//importing i18n 
+import { getCurrentLanguage } from '../i18n';
+import { useLanguageStore } from '../store/languageStore'
+
 // Note: In a production app, you would store this in an environment variable
 // For this demo, we're using mock data
 const API_KEY = process.env.EXPO_PUBLIC_GEMINI_API_KEY; 
@@ -48,6 +52,7 @@ export const geminiService = {
     dietaryRestrictions?: string[],
   ): Promise<NutritionRecommendation[]> {
     // Get data from store if not provided
+    const currentLanguage = getCurrentLanguage();
     const userProfile = useUserProfileStore.getState();
     const conditions = healthConditions || userProfile.healthProfile.conditions;
     const restrictions =
@@ -63,16 +68,19 @@ export const geminiService = {
       const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
       const prompt = `
-        Generate 3 personalized nutrition recommendations for someone with the following health conditions: 
+        Generate 3 personalized nutrition recommendations in ${currentLanguage} for someone with 
+        the following 
+        health conditions: 
         ${conditions.length > 0 ? conditions.join(", ") : "general health improvement"}.
         
         They have these dietary restrictions: ${restrictions.length > 0 ? restrictions.join(", ") : "none"}.
         
-        Format the response as a JSON array with objects containing:
+        respond in ${currentLanguage} Format the response as a JSON array with objects containing:
         - title: A short title for the recommendation
         - description: A brief explanation (1-2 sentences)
         - benefits: An array of 2-3 specific health benefits
         - foods: An array of 5 specific foods that fulfill this recommendation
+        -Important: all text must be in ${currentLanguage}
       `;
 
       const result = await model.generateContent(prompt);
@@ -101,6 +109,7 @@ export const geminiService = {
     food: string,
     healthCondition: string,
   ): Promise<string> {
+    const currentLanguage = getCurrentLanguage();
     try {
       // For demo purposes, return mock data if API key is not set
       if (!API_KEY || !genAI) {
@@ -111,8 +120,9 @@ export const geminiService = {
       const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
       const prompt = `
-        Explain in 2-3 sentences why ${food} is beneficial for someone with ${healthCondition}.
+        Explain in 2-3 sentences in ${currentLanguage} why ${food} is beneficial for someone with ${healthCondition}.
         Focus on specific nutrients and mechanisms. Keep it simple but scientifically accurate.
+        Responde ONLY with the explanation in ${currentLanguage} without any additional text or formatting.
       `;
 
       const result = await model.generateContent(prompt);
@@ -133,6 +143,7 @@ export const geminiService = {
     healthConditions?: string[],
     dietaryRestrictions?: string[],
   ): Promise<WeeklyMenu[]> {
+    const currentLanguage = getCurrentLanguage();
     try {
       // Validate API configuration first
       if (!API_KEY || !genAI) {
@@ -164,7 +175,7 @@ export const geminiService = {
   
       // Enhanced prompt with strict JSON formatting instructions
       const prompt = `
-        ACT AS A NUTRITIONIST. Generate a weekly meal plan with these requirements:
+        ACT AS A NUTRITIONIST. Generate in ${currentLanguage} a weekly meal plan with these requirements:
   
         HEALTH PROFILE:
         - Conditions: ${conditions.join(", ") || "general health maintenance"}
@@ -176,6 +187,7 @@ export const geminiService = {
   
         FORMATTING REQUIREMENTS:
         - Respond with ONLY valid JSON
+        - also respond in ${currentLanguage}
         - No markdown or code formatting
         - Structure must match exactly:
           [{

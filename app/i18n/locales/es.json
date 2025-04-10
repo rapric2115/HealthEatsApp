@@ -1,0 +1,61 @@
+{
+    "common": {
+      "set_Lang": "Primero configuremos el idioma",
+      "welcome": "Bienvenido a Healthy Meals",
+      "welcome_message": "Configuremos su perfil de salud para brindarle recomendaciones nutricionales personalizadas solo para usted.",
+      "welcome_Btn": "Comenzemos",
+      "personal_info": "Información personal",
+      "basic_info": "Información básica",
+      "full_name": "Nombre completo",
+      "age": "Edad",
+      "gender": "Género",
+      "weight": "Peso",
+      "height": "Altura",
+      "male": "Masculino",
+      "female": "Femenino",
+      "health_metric": "Métrica de salud",
+      "continue": "Continuar"
+    },
+   "health": {
+    "conditions_title": "Condiciones de salud",
+    "conditions_subtitle": "Seleccione cualquier condición que tenga o para la que esté en riesgo:",
+    "conditions": {
+      "high_cholesterol": "Colesterol alto",
+      "high_blood_pressure": "Presión arterial alta",
+      "diabetes_type_2": "Diabetes tipo 2",
+      "heart_disease": "Enfermedad cardíaca",
+      "obesity": "Obesidad",
+      "digestive_issues": "Problemas digestivos",
+      "none": "Ninguna de las anteriores"
+    },
+    "restriction_title": "Restricciones dietéticas",
+    "restriction_subtitle": "Seleccione cualquier restricción dieticia que tenga:",
+    "restrictions": {
+        "gluten_free": "Libre de gluten",
+        "dairy_free": "Libre de lácteos",
+        "vegan": "Vegano",
+        "vegetarian": "Vegetariano",
+        "pescadetarian": "Pescatariano",
+        "low-Sodium": "Bajo en sodio",
+        "low-sugar": "Bajo en azúcar",
+        "none": "No restricciones"
+    }
+  },
+  "preferences": {
+      "preferences_title": "Preferencias alimentarias",
+      "preferences_subtitle": "Seleccione sus cocinas y tipos de comidas favoritos:",
+      "cuisines": {
+          "mediterranean": "Mediterráneo",
+          "asian": "Asiático",
+          "mexican": "Mexicano",
+          "italian": "Italiano",
+          "indian": "Indio",
+          "american": "Americano",
+          "middle_eastern": "Medio Oriente",
+          "quick_easy_meals": "Comidas rápidas y fáciles",
+          "batch_cooking": "Cocina en lote",
+          "budget_friendly": "Económico"
+      },
+      "preferences_btn": "Completar preferencias"
+  }
+  }
