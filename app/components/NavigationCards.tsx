@@ -3,6 +3,8 @@ import { View, Text, ScrollView } from "react-native";
 import { Heart, Utensils, ShoppingCart } from "lucide-react-native";
 import NavigationCard from "./NavigationCard";
 
+import { useTranslation } from 'react-i18next';
+
 interface NavigationCardsProps {
   cards?: Array<{
     title: string;
@@ -14,6 +16,8 @@ interface NavigationCardsProps {
 }
 
 const NavigationCards = ({ cards }: NavigationCardsProps) => {
+  const { t, i18n } = useTranslation();
+
   const defaultCards: Array<{
     title: string;
     description: string;
@@ -22,29 +26,29 @@ const NavigationCards = ({ cards }: NavigationCardsProps) => {
     color: string;
   }> = [
     {
-      title: "Health Profile",
-      description: "Manage your health conditions and preferences",
+      title: `${t("navigationCards.healthProfile")}`,
+      description: `${t("navigationCards.healthProfileDescription")}`,
       icon: Heart,
       route: "/health-profile",
       color: "#E6F7FF",
     },
     {
-      title: "Meal Planning",
-      description: "View and customize your personalized meal plans",
+      title: `${t("navigationCards.mealPlanning")}`,
+      description: `${t("navigationCards.mealPlanningDescription")}`,
       icon: Utensils,
       route: "/meal-planning",
       color: "#F0FFF4",
     },
     {
-      title: "Grocery List",
-      description: "Check and manage your shopping list",
+      title: `${t("navigationCards.groceryList")}`,
+      description: `${t("navigationCards.groceryListDescription")}`,
       icon: ShoppingCart,
       route: "/grocery-list",
       color: "#FFF5F5",
     },
     {
-      title: "Nutrition Tips",
-      description: "Learn why certain foods benefit your health",
+      title: `${t("navigationCards.nutritionTips")}`,
+      description: `${t("navigationCards.nutritionTipsDescription")}`,
       icon: Heart,
       route: "/nutrition-tips",
       color: "#FFFBEA",

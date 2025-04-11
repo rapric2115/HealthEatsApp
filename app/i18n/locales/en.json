@@ -57,6 +57,43 @@
             "budget_friendly": "Budget-Friendly"
         },
         "preferences_btn": "Complete Preferences"
+    },
+    "dashboardSum": {
+        "title": "Your Nutrition Summary",
+        "health_profile": "Health Profile",
+        "meal_plan": "Meal Plan",
+        "days_plan": "Days Planned",
+        "grocery_list": "Grocery List",
+        "item_checked": "Items Checked"
+    },
+    "mealSuggestion": {
+        "suggestion": "Generating Suggestion",
+        "tryAgain": "Try Again",
+        "aiSuggestion": "AI Sugggestion",
+        "select": "Select",
+        "refresh": "Refresh"
+    },
+    "navigationCards": {
+        "mealPlanning": "Meal Planning",
+        "mealPlanningDescription": "View and customize your personalized meal plans",
+        "groceryList": "Grocery List",
+        "groceryListDescription": "Check and manage your shopping list",
+        "healthProfile": "Health Profile",
+        "healthProfileDescription": "Manage your health conditions and preferences",
+        "nutritionTips": "Nutrition Tips",
+        "nutritionTipsDescription": "Learn why certain foods benefit your health"
+    },
+    "profile": {
+        "profile_title": "Personal Information",
+        "health_profile": "Your Health Profile",
+        "save": "Save",
+        "edit": "Edit",
+        "save_changes": "Save Changes",
+        "edit_profile": "Edit Profile"
+    },
+    "home": {
+        "home_hello": "Hello",
+        "home_subtitle": "Let's plan your healthy meals for the week"       
     }
       
   }

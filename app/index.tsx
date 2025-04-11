@@ -17,6 +17,7 @@ import OnboardingModal from "./components/OnboardingModal";
 import { useAuthStore } from "./store/authStore";
 import { useUserProfileStore } from "./store/userProfileStore";
 import { LogOut } from "lucide-react-native";
+import { useTranslation } from "react-i18next";
 
 export default function MainDashboard() {
   const router = useRouter();
@@ -55,6 +56,8 @@ export default function MainDashboard() {
     router.replace("/login");
   };
 
+  const { t } = useTranslation();
+
   return (
     <SafeAreaView className="flex-1 bg-gray-100">
       <StatusBar barStyle="dark-content" backgroundColor="#f0fdf4" />
@@ -68,10 +71,10 @@ export default function MainDashboard() {
         <View className="mb-6 flex-row justify-between items-center">
           <View>
             <Text className="text-2xl font-bold text-gray-800 mb-2">
-              Hello, {user?.name || "User"}!
+              {t("home.home_hello")}, {user?.name || "User"}!
             </Text>
             <Text className="text-gray-600">
-              Let's plan your healthy meals for the week
+              {t("home.home_subtitle")}
             </Text>
           </View>
           <TouchableOpacity

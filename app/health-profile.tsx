@@ -12,10 +12,12 @@ import {
 import { useRouter } from "expo-router";
 import { Heart, Save, Edit2 } from "lucide-react-native";
 import { useUserProfileStore } from "./store/userProfileStore";
+import { useTranslation } from "react-i18next";
 
 export default function HealthProfile() {
   const userProfile = useUserProfileStore();
   const router = useRouter();
+  const {t} = useTranslation();
 
   const initialHealthProfile = {
     personalInfo: {
@@ -96,7 +98,7 @@ export default function HealthProfile() {
       <View className="bg-white rounded-xl p-4 mb-4 shadow-sm">
         <View className="flex-row justify-between items-center mb-4">
           <Text className="text-lg font-bold text-gray-800">
-            Personal Information
+            {t("profile.profile_title")}
           </Text>
         </View>
 
@@ -171,24 +173,24 @@ export default function HealthProfile() {
         <View className="flex-row items-center">
           <Heart size={20} color="#16a34a" />
           <Text className="ml-2 text-green-700 font-semibold">
-            Your Health Profile
+            {t("profile.health_profile")}
           </Text>
         </View>
         <TouchableOpacity
           onPress={handleEditToggle}
-          accessibilityLabel={editMode ? "Save changes" : "Edit profile"}
+          accessibilityLabel={editMode ? `${t("profile.save_changes")}` : `${t("profile.edit_profile")}`}
           accessibilityRole="button"
           className={`flex-row items-center ${editMode ? "bg-green-600" : "bg-gray-600"} px-3 py-1 rounded-full`}
         >
           {editMode ? (
             <>
               <Save size={16} color="white" />
-              <Text className="text-white ml-1 font-medium text-sm">Save</Text>
+              <Text className="text-white ml-1 font-medium text-sm">{t("profile.save")}</Text>
             </>
           ) : (
             <>
               <Edit2 size={16} color="white" />
-              <Text className="text-white ml-1 font-medium text-sm">Edit</Text>
+              <Text className="text-white ml-1 font-medium text-sm">{t("profile.edit")}</Text>
             </>
           )}
         </TouchableOpacity>

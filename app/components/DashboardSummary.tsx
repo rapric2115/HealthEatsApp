@@ -10,6 +10,8 @@ import { useRouter } from 'expo-router';
 import { useUserProfileStore } from '../store/userProfileStore';
 import { useTotalGroceryListStore } from "../store/totalStore";
 
+import { useTranslation } from 'react-i18next';
+
 interface DashboardSummaryProps {
   healthProfile?: {
     conditions: string[];
@@ -42,13 +44,13 @@ const DashboardSummary = ({
   const router = useRouter();
   const userProfile = useUserProfileStore();
   const {total, checkedItems} = useTotalGroceryListStore();
+  const { t, i18n } = useTranslation();
 
-  console.log('user profile from dashboard: ', userProfile);
 
   return (
     <View className="w-full bg-white p-4 rounded-lg shadow-sm">
       <Text className="text-xl font-bold mb-4 text-gray-800">
-        Your Nutrition Summary
+        {t("dashboardSum.title")}
       </Text>
 
       {/* Health Profile Summary */}
@@ -58,7 +60,7 @@ const DashboardSummary = ({
         </View>
         <View className="flex-1">
           <Text className="text-sm font-medium text-gray-800">
-            Health Profile
+            {t("dashboardSum.health_profile")}
           </Text>
           <Text className="text-xs text-gray-500">
             {userProfile.healthProfile.conditions.join(", ")}
@@ -75,10 +77,9 @@ const DashboardSummary = ({
           <Utensils size={18} color="#10b981" />
         </View>
         <View className="flex-1">
-          <Text className="text-sm font-medium text-gray-800">Meal Plan</Text>
+          <Text className="text-sm font-medium text-gray-800">{t("dashboardSum.meal_plan")}</Text>
           <Text className="text-xs text-gray-500">
-            {mealPlanStatus.daysPlanned} of {mealPlanStatus.totalDays} days
-            planned
+            {mealPlanStatus.daysPlanned} of {mealPlanStatus.totalDays} {t("dashboardSum.days_plan")}
           </Text>
         </View>
         <ChevronRight size={16} color="#9ca3af" />
@@ -91,11 +92,11 @@ const DashboardSummary = ({
         </View>
         <View className="flex-1">
           <Text className="text-sm font-medium text-gray-800">
-            Grocery List
+            {t("dashboardSum.grocery_list")}
           </Text>
           <Text className="text-xs text-gray-500">
             {checkedItems} of {total}{" "}
-            items checked
+            {t("dashboardSum.item_checked")}
           </Text>
         </View>
         <ChevronRight size={16} color="#9ca3af" />

@@ -4,6 +4,7 @@ import { useRouter } from "expo-router";
 import { LucideIcon } from "lucide-react-native";
 import { Heart, Utensils, ShoppingCart } from "lucide-react-native";
 
+
 interface NavigationCardProps {
   title: string;
   description: string;
@@ -20,6 +21,7 @@ const NavigationCard = ({
   color = "#E6F7FF",
 }: NavigationCardProps) => {
   const router = useRouter();
+
 
   const handlePress = () => {
     router.push(route);

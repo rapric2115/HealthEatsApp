@@ -4,6 +4,8 @@ import { Sparkles, RefreshCw } from "lucide-react-native";
 import { geminiService } from "../services/geminiService";
 import { useUserProfileStore } from "../store/userProfileStore";
 
+import { useTranslation } from 'react-i18next';
+
 interface MealSuggestionProps {
   mealType: "breakfast" | "lunch" | "dinner";
   day: string;
@@ -19,6 +21,8 @@ export default function MealSuggestion({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const userProfile = useUserProfileStore();
+
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     generateSuggestion();
@@ -81,7 +85,7 @@ export default function MealSuggestion({
     return (
       <View className="bg-green-50 p-3 rounded-lg flex-row items-center justify-center">
         <ActivityIndicator size="small" color="#16a34a" />
-        <Text className="ml-2 text-green-700">Generating suggestion...</Text>
+        <Text className="ml-2 text-green-700">{t("MealSuggestion.suggestion")}...</Text>
       </View>
     );
   }
@@ -95,7 +99,7 @@ export default function MealSuggestion({
           className="mt-2 flex-row items-center"
         >
           <RefreshCw size={16} color="#16a34a" />
-          <Text className="ml-1 text-green-600">Try Again</Text>
+          <Text className="ml-1 text-green-600">{t("mealSuggestion.tryAgain")}</Text>
         </TouchableOpacity>
       </View>
     );
@@ -105,7 +109,7 @@ export default function MealSuggestion({
     <View className="bg-green-50 p-3 rounded-lg">
       <View className="flex-row items-center mb-2">
         <Sparkles size={16} color="#16a34a" />
-        <Text className="ml-1 text-green-700 font-medium">AI Suggestion</Text>
+        <Text className="ml-1 text-green-700 font-medium">{t("mealSuggestion.aiSuggestion")}</Text>
       </View>
       <Text className="text-gray-700 mb-2">{suggestion}</Text>
       <View className="flex-row justify-between">
@@ -113,14 +117,14 @@ export default function MealSuggestion({
           onPress={handleSelect}
           className="bg-green-600 py-1 px-3 rounded-lg"
         >
-          <Text className="text-white font-medium">Select</Text>
+          <Text className="text-white font-medium">{t("mealSuggestion.select")}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={generateSuggestion}
           className="flex-row items-center"
         >
           <RefreshCw size={16} color="#16a34a" />
-          <Text className="ml-1 text-green-600">Refresh</Text>
+          <Text className="ml-1 text-green-600">{t("mealSuggestion.refresh")}</Text>
         </TouchableOpacity>
       </View>
     </View>

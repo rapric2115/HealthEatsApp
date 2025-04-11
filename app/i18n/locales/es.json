@@ -57,5 +57,42 @@
           "budget_friendly": "Económico"
       },
       "preferences_btn": "Completar preferencias"
-  }
+  },
+  "dashboardSum": {
+    "title": "Resumen del perfil de salud",
+    "health_profile": "Perfil de salud",
+    "meal_plan": "Plan de comidas",
+    "days_plan": "Días planeados",
+    "grocery_list": "Lista de compras",
+    "item_checked": "Artículos marcados"
+},
+"mealSuggestion": {
+  "suggestion": "Generando sugerencia",
+  "tryAgain": "Intenta de nuevo",
+  "aiSuggestion": "Sugerencia de IA",
+  "select": "Seleccionar",
+  "refresh": "Actualizar"
+},
+"navigationCards": {
+    "mealPlanning": "Planificación de comidas",
+    "mealPlanningDescription": "Ver y personalizar sus planes de comidas personalizados",
+    "groceryList": "Lista de compras",
+    "groceryListDescription": "Ver y administrar su lista de compras",
+    "healthProfile": "Perfil de salud",
+    "healthProfileDescription": "Administre sus condiciones de salud y preferencias",
+    "nutritionTips": "Consejos de nutrición",
+    "nutritionTipsDescription": "Aprenda por qué ciertos alimentos benefician su salud"
+},
+"profile": {
+  "profile_title": "Información Personal",
+  "health_profile": "Su perfil de salud",
+  "save": "Guardar",
+  "edit": "Editar",
+  "save_changes": "Guardar cambios",
+  "edit_profile": "Editar perfil"
+},
+"home": {
+  "home_hello": "Hola",
+  "home_subtitle": "Vamos a comenzar a planificar su comida"       
+}
   }
