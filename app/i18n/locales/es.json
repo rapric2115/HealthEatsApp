@@ -1,0 +1,98 @@
+{
+    "common": {
+      "set_Lang": "Primero configuremos el idioma",
+      "welcome": "Bienvenido a Healthy Meals",
+      "welcome_message": "Configuremos su perfil de salud para brindarle recomendaciones nutricionales personalizadas solo para usted.",
+      "welcome_Btn": "Comenzemos",
+      "personal_info": "Información personal",
+      "basic_info": "Información básica",
+      "full_name": "Nombre completo",
+      "age": "Edad",
+      "gender": "Género",
+      "weight": "Peso",
+      "height": "Altura",
+      "male": "Masculino",
+      "female": "Femenino",
+      "health_metric": "Métrica de salud",
+      "continue": "Continuar"
+    },
+   "health": {
+    "conditions_title": "Condiciones de salud",
+    "conditions_subtitle": "Seleccione cualquier condición que tenga o para la que esté en riesgo:",
+    "conditions": {
+      "high_cholesterol": "Colesterol alto",
+      "high_blood_pressure": "Presión arterial alta",
+      "diabetes_type_2": "Diabetes tipo 2",
+      "heart_disease": "Enfermedad cardíaca",
+      "obesity": "Obesidad",
+      "digestive_issues": "Problemas digestivos",
+      "none": "Ninguna de las anteriores"
+    },
+    "restriction_title": "Restricciones dietéticas",
+    "restriction_subtitle": "Seleccione cualquier restricción dieticia que tenga:",
+    "restrictions": {
+        "gluten_free": "Libre de gluten",
+        "dairy_free": "Libre de lácteos",
+        "vegan": "Vegano",
+        "vegetarian": "Vegetariano",
+        "pescadetarian": "Pescatariano",
+        "low-Sodium": "Bajo en sodio",
+        "low-sugar": "Bajo en azúcar",
+        "none": "No restricciones"
+    }
+  },
+  "preferences": {
+      "preferences_title": "Preferencias alimentarias",
+      "preferences_subtitle": "Seleccione sus cocinas y tipos de comidas favoritos:",
+      "cuisines": {
+          "mediterranean": "Mediterráneo",
+          "asian": "Asiático",
+          "mexican": "Mexicano",
+          "italian": "Italiano",
+          "indian": "Indio",
+          "american": "Americano",
+          "middle_eastern": "Medio Oriente",
+          "quick_easy_meals": "Comidas rápidas y fáciles",
+          "batch_cooking": "Cocina en lote",
+          "budget_friendly": "Económico"
+      },
+      "preferences_btn": "Completar preferencias"
+  },
+  "dashboardSum": {
+    "title": "Resumen del perfil de salud",
+    "health_profile": "Perfil de salud",
+    "meal_plan": "Plan de comidas",
+    "days_plan": "Días planeados",
+    "grocery_list": "Lista de compras",
+    "item_checked": "Artículos marcados"
+},
+"mealSuggestion": {
+  "suggestion": "Generando sugerencia",
+  "tryAgain": "Intenta de nuevo",
+  "aiSuggestion": "Sugerencia de IA",
+  "select": "Seleccionar",
+  "refresh": "Actualizar"
+},
+"navigationCards": {
+    "mealPlanning": "Planificación de comidas",
+    "mealPlanningDescription": "Ver y personalizar sus planes de comidas personalizados",
+    "groceryList": "Lista de compras",
+    "groceryListDescription": "Ver y administrar su lista de compras",
+    "healthProfile": "Perfil de salud",
+    "healthProfileDescription": "Administre sus condiciones de salud y preferencias",
+    "nutritionTips": "Consejos de nutrición",
+    "nutritionTipsDescription": "Aprenda por qué ciertos alimentos benefician su salud"
+},
+"profile": {
+  "profile_title": "Información Personal",
+  "health_profile": "Su perfil de salud",
+  "save": "Guardar",
+  "edit": "Editar",
+  "save_changes": "Guardar cambios",
+  "edit_profile": "Editar perfil"
+},
+"home": {
+  "home_hello": "Hola",
+  "home_subtitle": "Vamos a comenzar a planificar su comida"       
+}
+  }

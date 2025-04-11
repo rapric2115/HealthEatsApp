@@ -1,0 +1,99 @@
+{
+    "common": {
+      "set_Lang": "Let set the Language first",
+      "welcome": "Welcome to Healthy Meals",
+      "welcome_message": "Let's set up your health profile to provide personalized nutrition recommendations just for you.",
+      "welcome_Btn": "Get Started",
+      "personal_info": "Personal Information",
+      "basic_info": "Basic Information",
+      "full_name": "Full Name",
+      "age": "Age",
+      "gender": "Gender",
+      "weight": "Weight",
+      "height": "Height",
+      "male": "Male",
+      "female": "Female",
+      "health_metric": "Health Metric",
+      "continue": "Continue"
+    },
+    "health": {
+        "conditions_title": "Health Conditions",
+        "conditions_subtitle": "Select any conditions you have or are at risk for:",
+        "conditions": {
+            "high_cholesterol": "High Cholesterol",
+            "high_blood_pressure": "High Blood Pressure",
+            "diabetes_type_2": "Diabetes Type 2",
+            "heart_disease": "Heart Disease",
+            "obesity": "Obesity",
+            "digestive_issues": "Digestive Issues",
+            "none": "None of the above"
+        },
+        "restriction_title": "Dietary Restrictions",
+        "restriction_subtitle": "Select any dietary restrictions you have:",
+        "restrictions": {
+            "gluten_free": "Gluten Free",
+            "dairy_free": "Dairy Free",
+            "vegan": "Vegan",
+            "vegetarian": "Vegetarian",
+            "pescadetarian": "Pescatarian",
+            "low-Sodium": "Low Sodium",
+            "low-sugar": "Low Sugar",
+            "none": "No Restrictions"
+        }
+    },
+    "preferences": {
+        "preferences_title": "Food Preferences",
+        "preferences_subtitle": "Select your favorite cuisines and meal types:",
+        "cuisines": {
+            "mediterranean": "Mediterranean",
+            "asian": "Asian",
+            "mexican": "Mexican",
+            "italian": "Italian",
+            "indian": "Indian",
+            "american": "American",
+            "middle_eastern": "Middle Eastern",
+            "quick_easy_meals": "Quick & Easy Meals",
+            "batch_cooking": "Batch Cooking",
+            "budget_friendly": "Budget-Friendly"
+        },
+        "preferences_btn": "Complete Preferences"
+    },
+    "dashboardSum": {
+        "title": "Your Nutrition Summary",
+        "health_profile": "Health Profile",
+        "meal_plan": "Meal Plan",
+        "days_plan": "Days Planned",
+        "grocery_list": "Grocery List",
+        "item_checked": "Items Checked"
+    },
+    "mealSuggestion": {
+        "suggestion": "Generating Suggestion",
+        "tryAgain": "Try Again",
+        "aiSuggestion": "AI Sugggestion",
+        "select": "Select",
+        "refresh": "Refresh"
+    },
+    "navigationCards": {
+        "mealPlanning": "Meal Planning",
+        "mealPlanningDescription": "View and customize your personalized meal plans",
+        "groceryList": "Grocery List",
+        "groceryListDescription": "Check and manage your shopping list",
+        "healthProfile": "Health Profile",
+        "healthProfileDescription": "Manage your health conditions and preferences",
+        "nutritionTips": "Nutrition Tips",
+        "nutritionTipsDescription": "Learn why certain foods benefit your health"
+    },
+    "profile": {
+        "profile_title": "Personal Information",
+        "health_profile": "Your Health Profile",
+        "save": "Save",
+        "edit": "Edit",
+        "save_changes": "Save Changes",
+        "edit_profile": "Edit Profile"
+    },
+    "home": {
+        "home_hello": "Hello",
+        "home_subtitle": "Let's plan your healthy meals for the week"       
+    }
+      
+  }
