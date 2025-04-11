@@ -94,6 +94,21 @@
     "home": {
         "home_hello": "Hello",
         "home_subtitle": "Let's plan your healthy meals for the week"       
+    },
+    "mealEdit" : {
+        "mealEdit_title": "Edit Meal",
+        "mealEdit_description": "Description",
+        "mealEdit_healtBeneficts": "Health Benefits",
+        "mealEdit_suggestions": "AI Suggestion",
+        "mealEdit_saveChanges": "Save Changes"
+    },
+    "mealPlanning" : {
+        "loadingMealPlan" : "Loading your meal plan...",
+        "weeklyPlan": "Weekly Plan",
+        "newPlan": "New Plan",
+        "healthBenefits": "Health Benefits",
+        "mealBenefits": "This meal provides balanced nutrition tailored to your health profile.",
+        "noItems": "No items planned"
     }
       
   }

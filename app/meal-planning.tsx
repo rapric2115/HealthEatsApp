@@ -13,6 +13,7 @@ import { Calendar, Plus, Info, Edit2 } from "lucide-react-native";
 import { useUserProfileStore } from "./store/userProfileStore";
 import { geminiService } from "./services/geminiService";
 import AIRecommendations from "./components/AIRecommendations";
+import { useTranslation } from "react-i18next";
 
 const daysOfWeek = [
   "Monday",
@@ -43,6 +44,7 @@ export default function MealPlanning() {
   const [isLoading, setIsLoading] = useState(true);
   const [isGenerating, setIsGenerating] = useState(false);
   const userProfile = useUserProfileStore();
+  const { t } = useTranslation();
 
   const handleDaySelect = (day: string) => {
     setSelectedDay(day);
@@ -96,13 +98,14 @@ export default function MealPlanning() {
       await generateMealPlan();
     };
     loadInitialPlan();
+    console.log('from meal planning ', mealPlan.benefits);
   }, []);
 
   if (isLoading) {
     return (
       <SafeAreaView className="flex-1 bg-gray-100 justify-center items-center">
         <ActivityIndicator size="large" color="#16a34a" />
-        <Text className="mt-4 text-gray-700">Loading your meal plan...</Text>
+        <Text className="mt-4 text-gray-700">{t("mealPlanning.loadingMealPlan")}</Text>
       </SafeAreaView>
     );
   }
@@ -113,7 +116,7 @@ export default function MealPlanning() {
       <View className="px-4 py-2 bg-green-50 flex-row justify-between items-center">
         <View className="flex-row items-center">
           <Calendar size={20} color="#16a34a" />
-          <Text className="ml-2 text-green-700 font-semibold">Weekly Plan</Text>
+          <Text className="ml-2 text-green-700 font-semibold">{t("mealPlanning.weeklyPlan")}</Text>
         </View>
         <TouchableOpacity
           onPress={generateMealPlan}
@@ -126,7 +129,7 @@ export default function MealPlanning() {
             <>
               <Plus size={16} color="white" />
               <Text className="text-white ml-1 font-medium text-sm">
-                New Plan
+                {t("mealPlanning.newPlan")}
               </Text>
             </>
           )}
@@ -190,7 +193,7 @@ export default function MealPlanning() {
                   >
                     <Info size={16} color="#16a34a" />
                     <Text className="ml-1 text-green-600 text-sm">
-                      Health Benefits
+                      {t("mealPlanning.healthBenefits")}
                     </Text>
                   </TouchableOpacity>
 
@@ -204,7 +207,7 @@ export default function MealPlanning() {
                   )}
                 </>
               ) : (
-                <Text className="text-gray-500">No items planned</Text>
+                <Text className="text-gray-500">{t("mealPlan.noItems")}</Text>
               )}
             </View>
           );

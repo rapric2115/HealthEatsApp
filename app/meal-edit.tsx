@@ -14,9 +14,11 @@ import { Save, ArrowLeft } from "lucide-react-native";
 import Header from "./components/Header";
 import MealSuggestion from "./components/MealSuggestion";
 import { useUserProfileStore } from "./store/userProfileStore";
+import { useTranslation } from "react-i18next";
 
 export default function MealEdit() {
   const router = useRouter();
+  const { t } = useTranslation();
   const { day, mealType } = useLocalSearchParams<{
     day: string;
     mealType: "breakfast" | "lunch" | "dinner";
@@ -104,7 +106,7 @@ export default function MealEdit() {
       <ScrollView className="flex-1 p-4">
         <View className="bg-white rounded-xl p-4 mb-4 shadow-sm">
           <Text className="text-lg font-bold text-gray-800 mb-2">
-            Meal Title
+            {t("mealEdit.mealEdit_title")}
           </Text>
           <TextInput
             className="border border-gray-300 rounded-lg p-2 mb-4"
@@ -114,7 +116,7 @@ export default function MealEdit() {
           />
 
           <Text className="text-lg font-bold text-gray-800 mb-2">
-            Description
+            {t("mealEdit.mealEdit_description")}
           </Text>
           <TextInput
             className="border border-gray-300 rounded-lg p-2 mb-4"
@@ -128,7 +130,7 @@ export default function MealEdit() {
           />
 
           <Text className="text-lg font-bold text-gray-800 mb-2">
-            Health Benefits
+            {t("mealEdit.mealEdit_healthBenefits")}
           </Text>
           {mealData.healthBenefits.map((benefit, index) => (
             <TextInput
@@ -142,7 +144,7 @@ export default function MealEdit() {
         </View>
 
         <Text className="text-lg font-bold text-gray-800 mb-2">
-          AI Suggestions
+          {t("mealEdit.mealEdit_suggestions")}
         </Text>
         <MealSuggestion
           mealType={mealType || "breakfast"}
@@ -154,7 +156,7 @@ export default function MealEdit() {
           onPress={handleSave}
           className="bg-green-600 py-3 rounded-lg items-center mt-4 mb-8"
         >
-          <Text className="text-white font-bold">Save Changes</Text>
+          <Text className="text-white font-bold">{t("mealEdit_saveChanges")}</Text>
         </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>

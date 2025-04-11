@@ -94,5 +94,20 @@
 "home": {
   "home_hello": "Hola",
   "home_subtitle": "Vamos a comenzar a planificar su comida"       
+},
+"mealEdit" : {
+  "mealEdit_title": "Editar comida",
+  "mealEdit_description": "Descripción",
+  "mealEdit_healtBeneficts": "Beneficios para la salud",
+  "mealEdit_suggestions": "Sugerencia de IA",
+  "mealEdit_saveChanges": "Guardar cambios"
+},
+"mealPlanning" : {
+  "loadingMealPlan" : "Cargando su plan de comidas...",
+  "weeklyPlan": "Plan semanal",
+  "newPlan": "Nuevo Plan",
+  "healthBenefits": "Beneficios para la salud",
+  "mealBenefits": "Este plato proporciona una nutrición equilibrada adaptada a su perfil de salud.",
+  "noItems": "No hay elementos planeados"
 }
   }

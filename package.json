@@ -37,6 +37,7 @@
     "expo-symbols": "~0.2.2",
     "expo-system-ui": "4.0.9",
     "expo-web-browser": "~14.0.2",
+    "firebase": "^11.6.0",
     "i18next": "^24.2.3",
     "lightningcss": "^1.29.2",
     "lucide-react-native": "^0.479.0",

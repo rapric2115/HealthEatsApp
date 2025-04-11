@@ -3,7 +3,6 @@ import { useUserProfileStore } from "../store/userProfileStore";
 
 //importing i18n 
 import { getCurrentLanguage } from '../i18n';
-import { useLanguageStore } from '../store/languageStore'
 
 // Note: In a production app, you would store this in an environment variable
 // For this demo, we're using mock data
@@ -311,6 +310,7 @@ export const geminiService = {
     dietaryRestrictions?: string[],
   ): Promise<GroceryItem[]> {
     try {
+      const currentLanguage = getCurrentLanguage();
       const userProfile = useUserProfileStore.getState();
       const conditions = healthCondition || userProfile.healthProfile.conditions;
       const restrictions = dietaryRestrictions || userProfile.healthProfile.restrictions;
@@ -328,7 +328,7 @@ export const geminiService = {
       const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
   
       const prompt = `
-        Generate a grocery list with this: 
+        Generate a grocery list in ${currentLanguage} with this: 
         ${food || "a healthy weekly meal plan"}.
   
         Consider these health conditions ${conditions.length > 0 ? conditions.join(', ') : 'general health improvement'}.
@@ -339,6 +339,7 @@ export const geminiService = {
         - name: The name of the grocery item
         - category: The food category (e.g., Fruits, Vegetable, Grains, Proteins, Dairy, etc.)
         - checked: Always set to false
+        - also respond ONLY in ${currentLanguage}
       `;
   
       const result = await model.generateContent(prompt);
