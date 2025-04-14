@@ -109,6 +109,32 @@
         "healthBenefits": "Health Benefits",
         "mealBenefits": "This meal provides balanced nutrition tailored to your health profile.",
         "noItems": "No items planned"
-    }
+    },
+    "aiRecommendation" : {
+        "aiRecommendation_title": "AI Nutrition Recommendations",
+        "aiRecommendation_get": "Get AI Recommendations",
+        "aiRecommendation_benefits": "Benefits",
+        "aiRecommendation_recommended": "Recommended Foods",
+        "aiRecommendation_refresh": "Refresh Recommendations",
+        "aiRecommendation_loading": "Getting AI Recommendations.",
+        "aiRecommendation_tryAgain": "Try Again"
+    },
+    "days": {
+        "monday": "Monday",
+        "tuesday": "Tuesday",
+        "wednesday": "Wednesday",
+        "thursday": "Thursday",
+        "friday": "Friday",
+        "saturday": "Saturday",
+        "sunday": "Sunday"
+    },
+    "mealP": {
+        "sampleBreakfast": "Sample breakfast",
+        "sampleLunch": "Sample lunch",
+        "sampleDinner": "Sample dinner",
+        "sampleSnack": "Sample snack"
+      }
+
+      
       
   }

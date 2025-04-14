@@ -15,6 +15,7 @@ import {
 import { useRouter } from "expo-router";
 import { Eye, EyeOff, LogIn } from "lucide-react-native";
 import { useAuthStore } from "./store/authStore";
+import { GoogleSignInButton } from "./components/googleSignInButton";
 
 export default function Login() {
   const router = useRouter();
@@ -128,6 +129,14 @@ export default function Login() {
                 {isLoading ? "Logging in..." : "Login"}
               </Text>
             </TouchableOpacity>
+
+            <View className="flex-row items-center my-6">
+              <View className="flex-1 h-px bg-gray-300" />
+              <Text className="px-3 text-gray-500">OR</Text>
+              <View className="flex-1 h-px bg-gray-300" />
+            </View>
+            
+            <GoogleSignInButton />
 
             <View className="flex-row justify-center mt-8">
               <Text className="text-gray-600">Don't have an account? </Text>

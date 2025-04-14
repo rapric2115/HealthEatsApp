@@ -109,5 +109,29 @@
   "healthBenefits": "Beneficios para la salud",
   "mealBenefits": "Este plato proporciona una nutrición equilibrada adaptada a su perfil de salud.",
   "noItems": "No hay elementos planeados"
-}
+},
+"aiRecommendation" : {
+    "aiRecommendation_title": "Recomendaciones de nutrición de IA",
+    "aiRecommendation_get": "Obtener recomendaciones de IA",
+    "aiRecommendation_benefits": "Beneficios",
+    "aiRecommendation_recommended": "Alimentos recomendados",
+    "aiRecommendation_refresh": "Actualizar Recomendaciones",
+    "aiRecommendation_loading": "Obteniendo recomendaciones de IA.",
+    "aiRecommendation_tryAgain": "Intenta de nuevo"
+  },
+  "days": {
+    "monday": "Lunes",
+    "tuesday": "Martes",
+    "wednesday": "Miércoles",
+    "thursday": "Jueves",
+    "friday": "Viernes",
+    "saturday": "Sábado",
+    "sunday": "Domingo"
+  },
+  "mealP": {
+    "sampleBreakfast": "Desayuno de ejemplo",
+    "sampleLunch": "Almuerzo de ejemplo",
+    "sampleDinner": "Cena de ejemplo",
+    "sampleSnack": "Merienda de ejemplo"
+  }
   }

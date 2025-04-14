@@ -1,4 +1,3 @@
-// i18n/index.js
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import { useLanguageStore } from '../store/languageStore';
@@ -11,11 +10,14 @@ const initializeI18n = () => {
     // Add more languages as needed
   };
 
+  // Get initial language from Zustand with fallback
+  const initialLanguage = useLanguageStore.getState().language || 'es';
+
   i18n
     .use(initReactI18next)
     .init({
       compatibilityJSON: 'v3',
-      lng: useLanguageStore.getState().language, // Get initial language from Zustand
+      lng: initialLanguage,
       fallbackLng: 'es',
       resources,
       interpolation: {
@@ -37,5 +39,15 @@ const initializeI18n = () => {
   return i18n;
 };
 
-export const getCurrentLanguage = () => { useLanguageStore.getState().language };
+// Fixed getCurrentLanguage function
+export const getCurrentLanguage = () => {
+  try {
+    // Get current language from Zustand with fallback
+    return useLanguageStore.getState().language || 'es';
+  } catch (error) {
+    console.error('Error getting language:', error);
+    return 'es'; // Fallback to Spanish if there's an error
+  }
+};
+
 export default initializeI18n();

@@ -15,6 +15,7 @@ import {
 import { useRouter } from "expo-router";
 import { Eye, EyeOff, UserPlus, ArrowLeft } from "lucide-react-native";
 import { useAuthStore } from "./store/authStore";
+import { GoogleSignInButton } from "./components/googleSignInButton";
 
 export default function Register() {
   const router = useRouter();
@@ -23,9 +24,9 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
 
-  const { login } = useAuthStore();
+  const { register, isLoading, error } = useAuthStore();
 
   const handleRegister = async () => {
     if (!name || !email || !password || !confirmPassword) {
@@ -38,7 +39,7 @@ export default function Register() {
       return;
     }
 
-    setIsLoading(true);
+    
 
     try {
       // In a real app, this would create a user account in a backend
@@ -46,7 +47,7 @@ export default function Register() {
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
       // Store auth state in Zustand
-      login({ email, name });
+      await register( email, password, name );
 
       // Navigate to main screen
       router.replace("/");
@@ -56,7 +57,7 @@ export default function Register() {
         "Could not create account. Please try again.",
       );
     } finally {
-      setIsLoading(false);
+      // setIsLoading(false);
     }
   };
 
@@ -160,6 +161,13 @@ export default function Register() {
                 {isLoading ? "Creating Account..." : "Create Account"}
               </Text>
             </TouchableOpacity>
+            <View className="flex-row items-center my-6">
+              <View className="flex-1 h-px bg-gray-300" />
+              <Text className="px-3 text-gray-500">OR</Text>
+              <View className="flex-1 h-px bg-gray-300" />
+            </View>
+            
+            <GoogleSignInButton />
 
             <View className="flex-row justify-center mt-6">
               <Text className="text-gray-600">Already have an account? </Text>

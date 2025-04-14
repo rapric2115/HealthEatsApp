@@ -15,18 +15,23 @@ import { geminiService } from "./services/geminiService";
 import AIRecommendations from "./components/AIRecommendations";
 import { useTranslation } from "react-i18next";
 
-const daysOfWeek = [
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-  "Sunday",
-];
 
-// Simplified initial state
-const initialMealPlan = daysOfWeek.reduce((acc: Record<string, { breakfast: string[]; lunch: string[]; dinner: string[]; snacks: string[] }>, day) => {
+export default function MealPlanning() {
+  const {t} = useTranslation();
+
+  const daysOfWeek = [
+    t("days.monday"),
+    t("days.tuesday"),
+    t("days.wednesday"),
+    t("days.thursday"),
+    t("days.friday"),
+    t("days.saturday"),
+    t("days.sunday"),
+  ];
+  
+  
+  // Simplified initial state
+  const initialMealPlan = daysOfWeek.reduce((acc: Record<string, { breakfast: string[]; lunch: string[]; dinner: string[]; snacks: string[] }>, day) => {
   acc[day] = {
     breakfast: [],
     lunch: [],
@@ -34,9 +39,8 @@ const initialMealPlan = daysOfWeek.reduce((acc: Record<string, { breakfast: stri
     snacks: [],
   };
   return acc;
-}, {} as Record<string, { breakfast: string[]; lunch: string[]; dinner: string[]; snacks: string[] }>);
-
-export default function MealPlanning() {
+  }, {} as Record<string, { breakfast: string[]; lunch: string[]; dinner: string[]; snacks: string[] }>);
+ 
   const router = useRouter();
   const [selectedDay, setSelectedDay] = useState(daysOfWeek[0]);
   const [mealPlan, setMealPlan] = useState(initialMealPlan);
@@ -44,7 +48,7 @@ export default function MealPlanning() {
   const [isLoading, setIsLoading] = useState(true);
   const [isGenerating, setIsGenerating] = useState(false);
   const userProfile = useUserProfileStore();
-  const { t } = useTranslation();
+
 
   const handleDaySelect = (day: string) => {
     setSelectedDay(day);
@@ -56,41 +60,77 @@ export default function MealPlanning() {
   };
 
   // Generate complete weekly meal plan
-  const generateMealPlan = async () => {
-    setIsGenerating(true);
-    try {
-      const conditions = userProfile.healthProfile.conditions;
-      const restrictions = userProfile.healthProfile.restrictions;
+ // Update the generateMealPlan function:
+ const generateMealPlan = async () => {
+  setIsGenerating(true);
+  try {
+    const conditions = userProfile.healthProfile.conditions;
+    const restrictions = userProfile.healthProfile.restrictions;
 
-      const weeklyMenu = await geminiService.getWeeklyMenu(
-        conditions,
-        restrictions
-      );
+    const weeklyMenu = await geminiService.getWeeklyMenu(
+      conditions,
+      restrictions
+    );
 
-      // Transform the WeeklyMenu[] into our state format
-      const newMealPlan = weeklyMenu.reduce((acc: Record<string, { breakfast: string[]; lunch: string[]; dinner: string[]; snacks: string[]; }>, dayPlan) => {
-        acc[dayPlan.day] = {
-          breakfast: dayPlan.meals.breakfast,
-          lunch: dayPlan.meals.lunch,
-          dinner: dayPlan.meals.dinner,
-          snacks: dayPlan.meals.snacks,
+    // Create a mapping of possible day names
+    const dayNameMap: Record<string, string> = {
+      // English
+      "Monday": t("days.monday"),
+      "Tuesday": t("days.tuesday"),
+      "Wednesday": t("days.wednesday"),
+      "Thursday": t("days.thursday"),
+      "Friday": t("days.friday"),
+      "Saturday": t("days.saturday"),
+      "Sunday": t("days.sunday"),
+      // Spanish
+      "Lunes": t("days.monday"),
+      "Martes": t("days.tuesday"),
+      "Miércoles": t("days.wednesday"),
+      "Jueves": t("days.thursday"),
+      "Viernes": t("days.friday"),
+      "Sábado": t("days.saturday"),
+      "Domingo": t("days.sunday")
+    };
+
+    const newMealPlan = { ...initialMealPlan };
+    
+    weeklyMenu.forEach(dayPlan => {
+      // Find the matching translated day name
+      const translatedDay = dayNameMap[dayPlan.day] || dayPlan.day;
+      
+      if (translatedDay && newMealPlan[translatedDay]) {
+        newMealPlan[translatedDay] = {
+          breakfast: dayPlan.meals.breakfast || [],
+          lunch: dayPlan.meals.lunch || [],
+          dinner: dayPlan.meals.dinner || [],
+          snacks: dayPlan.meals.snacks || []
         };
-        return acc;
-      }, {});
+      }
+    });
 
-      setMealPlan(newMealPlan);
-      userProfile.updateMealPlanStatus({
-        daysPlanned: 7,
-        totalDays: 7,
-      });
-    } catch (error) {
-      console.error("Failed to generate meal plan:", error);
-      // You could show an alert to the user here
-    } finally {
-      setIsGenerating(false);
-      setIsLoading(false);
-    }
-  };
+    setMealPlan(newMealPlan);
+    userProfile.updateMealPlanStatus({
+      daysPlanned: 7,
+      totalDays: 7,
+    });
+  } catch (error) {
+    console.error("Failed to generate meal plan:", error);
+    // Fallback to mock data with translated days
+    const mockPlan = { ...initialMealPlan };
+    daysOfWeek.forEach(day => {
+      mockPlan[day] = {
+        breakfast: [t("mealP.sampleBreakfast")],
+        lunch: [t("mealP.sampleLunch")],
+        dinner: [t("mealP.sampleDinner")],
+        snacks: [t("mealP.sampleSnack")]
+      };
+    });
+    setMealPlan(mockPlan);
+  } finally {
+    setIsGenerating(false);
+    setIsLoading(false);
+  }
+};
 
   // Load initial meal plan
   useEffect(() => {
@@ -207,7 +247,7 @@ export default function MealPlanning() {
                   )}
                 </>
               ) : (
-                <Text className="text-gray-500">{t("mealPlan.noItems")}</Text>
+                <Text className="text-gray-500">{t("mealPlanning.noItems")}</Text>
               )}
             </View>
           );

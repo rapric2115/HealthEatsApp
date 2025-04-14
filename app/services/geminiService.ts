@@ -229,10 +229,10 @@ export const geminiService = {
       return menuData.map(day => ({
         day: day.day,
         meals: {
-          breakfast: day.meals.breakfast || [],
-          lunch: day.meals.lunch || [],
-          dinner: day.meals.dinner || [],
-          snacks: day.meals.snacks || []
+          breakfast: Array.isArray(day.meals.breakfast) ? day.meals.breakfast : [],
+          lunch: Array.isArray(day.meals.lunch) ? day.meals.lunch : [],
+          dinner: Array.isArray(day.meals.dinner) ? day.meals.dinner : [],
+          snacks: Array.isArray(day.meals.snacks) ? day.meals.snacks : [],
         }
       }));
   
