@@ -10,6 +10,7 @@ import { Sparkles, ChevronDown, ChevronUp } from "lucide-react-native";
 import type { NutritionRecommendation } from "../services/geminiService";
 import { geminiService } from "../services/geminiService";
 import { useUserProfileStore } from "../store/userProfileStore";
+import { useTranslation } from "react-i18next";
 
 interface AIRecommendationsProps {
   healthConditions?: string[];
@@ -27,6 +28,7 @@ export default function AIRecommendations({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     fetchRecommendations();
@@ -64,7 +66,7 @@ export default function AIRecommendations({
       <View className="bg-white rounded-xl p-6 mb-4 shadow-sm items-center justify-center">
         <ActivityIndicator size="large" color="#16a34a" />
         <Text className="text-gray-600 mt-2">
-          Getting AI recommendations...
+          {t("aiRecommendation.aiRecommendation_loading")}...
         </Text>
       </View>
     );
@@ -78,7 +80,7 @@ export default function AIRecommendations({
           onPress={fetchRecommendations}
           className="bg-green-600 py-2 px-4 rounded-lg self-start"
         >
-          <Text className="text-white font-medium">Try Again</Text>
+          <Text className="text-white font-medium">{t("aiRecommendation.aiRecomendation_tryAgain")}</Text>
         </TouchableOpacity>
       </View>
     );
@@ -89,7 +91,7 @@ export default function AIRecommendations({
       <View className="flex-row items-center mb-4">
         <Sparkles size={20} color="#16a34a" />
         <Text className="text-lg font-bold text-gray-800 ml-2">
-          AI Nutrition Recommendations
+          {t("aiRecommendation.aiRecommendation_title")}
         </Text>
       </View>
 
@@ -100,7 +102,7 @@ export default function AIRecommendations({
         >
           <Sparkles size={18} color="#16a34a" />
           <Text className="text-green-700 font-medium ml-2">
-            Get AI Recommendations
+            {t("aiRecommendation.aiRecommendation_get")}
           </Text>
         </TouchableOpacity>
       ) : (
@@ -131,7 +133,7 @@ export default function AIRecommendations({
                   </Text>
 
                   <Text className="font-medium text-gray-800 mb-1">
-                    Benefits:
+                    {t("aiRecommendation.aiRecommendation_benefits")}:
                   </Text>
                   <View className="mb-3">
                     {recommendation.benefits.map((benefit, i) => (
@@ -142,7 +144,7 @@ export default function AIRecommendations({
                   </View>
 
                   <Text className="font-medium text-gray-800 mb-1">
-                    Recommended Foods:
+                    {t("aiRecommendation.aiRecommendation_recommended")}:
                   </Text>
                   <View>
                     {recommendation.foods.map((food, i) => (
@@ -161,7 +163,7 @@ export default function AIRecommendations({
             className="bg-green-600 py-2 rounded-lg items-center mt-2"
           >
             <Text className="text-white font-medium">
-              Refresh Recommendations
+              {t("aiRecommendation.aiRecommendation_refresh")}
             </Text>
           </TouchableOpacity>
         </ScrollView>
