@@ -16,8 +16,7 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "googleServicesFile": "./app/utils/google-services.json",
-      "package": "com.yourcompany.yourapp"
+      "package": "com.rapric007.healthyMeal"
     },
     "web": {
       "bundler": "metro",
