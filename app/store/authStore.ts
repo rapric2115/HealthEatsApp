@@ -18,8 +18,13 @@ import * as Google from 'expo-auth-session/providers/google';
 import { ResponseType } from "expo-auth-session";
 import { Platform } from "react-native";
 import { promptAsync } from "../utils/googleAuth";
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
+import auth from '@react-native-firebase/auth';
 
 WebBrowser.maybeCompleteAuthSession();
+GoogleSignin.configure({
+  webClientId: '673383246167-iqctfht9kbhqpb0qk77u997m1s2knqbk.apps.googleusercontent.com'
+});
 
 type User = {
   email: string;
@@ -35,12 +40,12 @@ type AuthState = {
   error: string | null;
   register: (email: string, password: string, name: string) => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
-  googleSignIn: () => Promise<void>;
+  onGoogleSignIn: () => Promise<void>;
   logout: () => Promise<void>;
   clearError: () => void;
 };
 
-const auth = getAuth(app);
+const authFirebase = getAuth(app);
 
 export const useAuthStore = create<AuthState, [["zustand/persist", unknown]]>(
   persist(
@@ -50,20 +55,30 @@ export const useAuthStore = create<AuthState, [["zustand/persist", unknown]]>(
       isLoading: false,
       error: null,
 
-      googleSignIn: async () => {
+      onGoogleSignIn: async () => {
         set({ isLoading: true, error: null });
         try {
           let userCredential: UserCredential;
 
-          if (Platform.OS === 'web') {
-            // Web implementation
-            userCredential = await signInWithPopup(auth, googleProvider);
-          } else {
-            // Mobile implementation
-            userCredential = await promptAsync();
-          }
+        await GoogleSignin.hasPlayServices({
+          showPlayServicesUpdateDialog: true,
+        });
+        const signInResult = await GoogleSignin.signIn();
+        let idToken = signInResult.data?.idToken;
+        if(!idToken) {
+          idToken = signInResult.idToken || signInResult.serverAuthCode;
+        }
+        if(!idToken) {
+          throw new Error("Google sign-in failed: No ID token received");
+        }
 
-          return handleAuthSuccess(userCredential, set);
+        if (!signInResult.data) {
+          throw new Error("Google sign-in failed: No data received");
+        }
+        const googleCredential = auth.GoogleAuthProvider.credential(signInResult.data.idToken);
+
+        await auth().signInWithCredential(googleCredential);
+        set({ isLoading: false });
           
         } catch (error: any) {
           let errorMessage = "Google sign-in failed";
@@ -83,7 +98,7 @@ export const useAuthStore = create<AuthState, [["zustand/persist", unknown]]>(
       register: async (email, password, name) => {
         set({ isLoading: true, error: null });
         try {
-          const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+          const userCredential = await createUserWithEmailAndPassword(authFirebase, email, password);
           
           const user: User = {
             email: userCredential.user.email || email,
@@ -122,7 +137,7 @@ export const useAuthStore = create<AuthState, [["zustand/persist", unknown]]>(
       login: async (email, password) => {
         set({ isLoading: true, error: null });
         try {
-          const userCredential = await signInWithEmailAndPassword(auth, email, password);
+          const userCredential = await signInWithEmailAndPassword(authFirebase, email, password);
           
           const user: User = {
             email: userCredential.user.email || email,
@@ -159,7 +174,7 @@ export const useAuthStore = create<AuthState, [["zustand/persist", unknown]]>(
       logout: async () => {
         set({ isLoading: true });
         try {
-          await signOut(auth);
+          await signOut(authFirebase);
           set({ 
             user: null,
             isAuthenticated: false,

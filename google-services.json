@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "673383246167",
+    "project_id": "healthymeal-app",
+    "storage_bucket": "healthymeal-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:673383246167:android:6c612a2f7d46aef663b612",
+        "android_client_info": {
+          "package_name": "com.raphaelrichardson.healthyMealApp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "673383246167-gt5p3rh8l7snvp89l45ufvbk8shoo3lc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.raphaelrichardson.healthyMealApp",
+            "certificate_hash": "eb3dab6eaa6b9aa2321be1577d0eada53d974deb"
+          }
+        },
+        {
+          "client_id": "673383246167-iqctfht9kbhqpb0qk77u997m1s2knqbk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlfp02Demy4YMnMcShMaa7e7Qe1rwAcNU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "673383246167-iqctfht9kbhqpb0qk77u997m1s2knqbk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
