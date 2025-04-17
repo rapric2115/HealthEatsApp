@@ -3,12 +3,13 @@ import { TouchableOpacity, View, Text, Image, Platform } from 'react-native';
 import { useAuthStore } from '../store/authStore';
 import { AntDesign } from '@expo/vector-icons';
 
-export const GoogleSignInButton = () => {
-  const { googleSignIn, isLoading } = useAuthStore();
+const GoogleSignInButton = () => {
+  // const { onGoogleSignIn, isLoading } = useAuthStore();
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const handleGoogleSignIn = async () => {
     try {
-        await googleSignIn();
+        // await onGoogleSignIn();
     } catch (error) {
         console.error('Google Sign-In Error:', error);
     }
@@ -27,3 +28,5 @@ export const GoogleSignInButton = () => {
     </TouchableOpacity>
   );
 };
+
+export default GoogleSignInButton;

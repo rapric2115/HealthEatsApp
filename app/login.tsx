@@ -15,7 +15,7 @@ import {
 import { useRouter } from "expo-router";
 import { Eye, EyeOff, LogIn } from "lucide-react-native";
 import { useAuthStore } from "./store/authStore";
-import { GoogleSignInButton } from "./components/googleSignInButton";
+import GoogleSignInButton from "./components/googleSignInButton";
 
 export default function Login() {
   const router = useRouter();
@@ -40,7 +40,7 @@ export default function Login() {
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
       // Store auth state in Zustand
-      login({ email, name: email.split("@")[0] });
+      login(email, password);
 
       // Navigate to main screen
       router.replace("/");

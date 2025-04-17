@@ -16,8 +16,7 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.rapric007.healthyMeal",
-      "googleServicesFile": "./google-services.json"
+      "package": "com.rapric007.healthyMeal"
     },
     "web": {
       "bundler": "metro",
@@ -35,8 +34,7 @@
           "backgroundColor": "#ffffff"
         }
       ],
-      "expo-localization",
-      "@react-native-google-signin/google-signin"
+      "expo-localization"
     ],
     "experiments": {
       "typedRoutes": true
