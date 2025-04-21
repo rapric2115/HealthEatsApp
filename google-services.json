@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "673383246167-llupqrg150hjkuk5b1ksn15empi384m8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.raphaelrichardson.healthyMealApp",
+            "certificate_hash": "d1013808ba47fe6de9deb4e1c7018476f406bac8"
+          }
+        },
+        {
           "client_id": "673383246167-iqctfht9kbhqpb0qk77u997m1s2knqbk.apps.googleusercontent.com",
           "client_type": 3
         }
