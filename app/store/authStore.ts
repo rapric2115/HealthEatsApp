@@ -18,13 +18,13 @@ import app, { googleProvider } from "../services/firebase";
 // import { ResponseType } from "expo-auth-session";
 // import { Platform } from "react-native";
 // import { promptAsync } from "../utils/googleAuth";
-// import { GoogleSignin, isSuccessResponse, statusCodes } from "@react-native-google-signin/google-signin";
-// import auth from '@react-native-firebase/auth';
+import { GoogleSignin, isSuccessResponse, statusCodes } from "@react-native-google-signin/google-signin";
+import auth from '@react-native-firebase/auth';
 
 // WebBrowser.maybeCompleteAuthSession();
-// GoogleSignin.configure({
-//   webClientId: '673383246167-iqctfht9kbhqpb0qk77u997m1s2knqbk.apps.googleusercontent.com'
-// });
+GoogleSignin.configure({
+  webClientId: '673383246167-iqctfht9kbhqpb0qk77u997m1s2knqbk.apps.googleusercontent.com'
+});
 
 type User = {
   email: string;
@@ -40,7 +40,7 @@ type AuthState = {
   error: string | null;
   register: (email: string, password: string, name: string) => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
-  // onGoogleSignIn: () => Promise<void>;
+  onGoogleSignIn: () => Promise<void>;
   logout: () => Promise<void>;
   clearError: () => void;
 };
@@ -54,7 +54,7 @@ export const useAuthStore = create<AuthState, [["zustand/persist", unknown]]>(
       isAuthenticated: false,
       isLoading: false,
       error: null,
-
+    
 /*************  ✨ Windsurf Command ⭐  *************/
       /**
        * Sign-in with Google account.
@@ -67,49 +67,49 @@ export const useAuthStore = create<AuthState, [["zustand/persist", unknown]]>(
       
 /*******  ce30cfe3-dca5-4d9e-ac3f-5526cf75ed95  *******/  
 
-// onGoogleSignIn: async () => {
-//         set({ isLoading: true, error: null });
-//         try {
+onGoogleSignIn: async () => {
+        set({ isLoading: true, error: null });
+        try {
         
 
-//         await GoogleSignin.hasPlayServices({
-//           showPlayServicesUpdateDialog: true,
-//         });
+        await GoogleSignin.hasPlayServices({
+          showPlayServicesUpdateDialog: true,
+        });
        
-//         const response = await GoogleSignin.signIn();
-//         if (isSuccessResponse(response)) {
-//           const { idToken } = response;
-//           const googleCredential = GoogleAuthProvider.credential(idToken);
-//           const userCredential = await signInWithCredential(authFirebase, googleCredential);
-//           const user: User = {
-//             email: userCredential.user.email || "",
-//             name: userCredential.user.displayName || "",
-//             uid: userCredential.user.uid,
-//             photoURL: userCredential.user.photoURL || undefined
-//           };
+        const response = await GoogleSignin.signIn();
+        if (isSuccessResponse(response)) {
+          const { idToken } = response;
+          const googleCredential = GoogleAuthProvider.credential(idToken);
+          const userCredential = await signInWithCredential(authFirebase, googleCredential);
+          const user: User = {
+            email: userCredential.user.email || "",
+            name: userCredential.user.displayName || "",
+            uid: userCredential.user.uid,
+            photoURL: userCredential.user.photoURL || undefined
+          };
 
-//           set({ 
-//             user,
-//             isAuthenticated: true,
-//             isLoading: false 
-//           });
-//         }
-//         set({ isLoading: false });
+          set({ 
+            user,
+            isAuthenticated: true,
+            isLoading: false 
+          });
+        }
+        set({ isLoading: false });
           
-//         } catch (error: any) {
-//           let errorMessage = "Google sign-in failed";
-//           if (error.code === 'auth/account-exists-with-different-credential') {
-//             errorMessage = "Account exists with different credentials";
-//           } else if (error.message.includes('cancelled')) {
-//             errorMessage = "Sign-in was cancelled";
-//           }
-//           set({ 
-//             error: errorMessage,
-//             isLoading: false 
-//           });
-//           throw error;
-//         }
-//       },
+        } catch (error: any) {
+          let errorMessage = "Google sign-in failed";
+          if (error.code === 'auth/account-exists-with-different-credential') {
+            errorMessage = "Account exists with different credentials";
+          } else if (error.message.includes('cancelled')) {
+            errorMessage = "Sign-in was cancelled";
+          }
+          set({ 
+            error: errorMessage,
+            isLoading: false 
+          });
+          throw error;
+        }
+      },
 
       register: async (email, password, name) => {
         set({ isLoading: true, error: null });

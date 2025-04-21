@@ -16,7 +16,8 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.rapric007.healthyMeal"
+      "package": "com.rapric007.healthyMeal",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "bundler": "metro",
@@ -35,6 +36,7 @@
         }
       ],
       "expo-localization"
+      
     ],
     "experiments": {
       "typedRoutes": true

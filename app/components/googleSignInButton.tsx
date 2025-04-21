@@ -4,12 +4,12 @@ import { useAuthStore } from '../store/authStore';
 import { AntDesign } from '@expo/vector-icons';
 
 const GoogleSignInButton = () => {
-  // const { onGoogleSignIn, isLoading } = useAuthStore();
-  const [isLoading, setIsLoading] = React.useState(false);
+  const { onGoogleSignIn, isLoading } = useAuthStore();
+  // const [isLoading, setIsLoading] = React.useState(false);
 
   const handleGoogleSignIn = async () => {
     try {
-        // await onGoogleSignIn();
+        await onGoogleSignIn();
     } catch (error) {
         console.error('Google Sign-In Error:', error);
     }
