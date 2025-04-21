@@ -16,7 +16,7 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.rapric007.healthyMeal",
+      "package": "com.raphaelrichardson.healthyMealApp",
       "googleServicesFile": "./google-services.json"
     },
     "web": {
@@ -35,7 +35,7 @@
           "backgroundColor": "#ffffff"
         }
       ],
-      "expo-localization" 
+      "expo-localization"
     ],
     "experiments": {
       "typedRoutes": true
