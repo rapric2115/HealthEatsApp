@@ -9,7 +9,7 @@ WebBrowser.maybeCompleteAuthSession();
 
 export const promptAsync = async () => {
   const [request, response, promptAsync] = Google.useAuthRequest({
-    clientId: '1075873455737-vn6vcbcbvii4j2m9v9nlv5trl38gnpjv.apps.googleusercontent.com',
+    clientId: '673383246167-iqctfht9kbhqpb0qk77u997m1s2knqbk.apps.googleusercontent.com',
     // iosClientId: 'YOUR_IOS_CLIENT_ID',
     // androidClientId: 'YOUR_ANDROID_CLIENT_ID',
     responseType: ResponseType.Token,
