@@ -77,10 +77,11 @@ onGoogleSignIn: async () => {
         });
        
         const response = await GoogleSignin.signIn();
-        if (isSuccessResponse(response)) {
-          const { idToken } = response;
-          const googleCredential = GoogleAuthProvider.credential(idToken);
-          const userCredential = await signInWithCredential(authFirebase, googleCredential);
+        const idToken = response.data?.idToken;
+
+        if (!idToken) {
+          const googleCredential = auth.GoogleAuthProvider.credential(idToken || null);
+          const userCredential = await auth().signInWithCredential(googleCredential);
           const user: User = {
             email: userCredential.user.email || "",
             name: userCredential.user.displayName || "",
